@@ -6,3 +6,4 @@
 
 ## 記事
 - [画像生成AI商用利用、規約のどこを確認するか](https://gazou.aobaworks.com/ai-image-commercial-use-terms-check/): 画像生成AIを商用で使う前に規約で見るべき4つの場所（権利、プラン・売上条件、禁止事項、公開範囲・例外）と探し方を、主要6サービスの公式ページをもとに解説します（2026年10月時点）。
+- [画像生成AIプロンプトの書き方、順番で決まる](https://gazou.aobaworks.com/image-ai-prompt-kakikata-jun/): 画像生成AIのプロンプトの書き方を、主語→構図→画風の「順番」でまとめました。ChatGPT・Gemini・Firefly・Midjourneyの公式ガイドをもとに、型、つまずいたときの直し方、料金まで紹介します。
