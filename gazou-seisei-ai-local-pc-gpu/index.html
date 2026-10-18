@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ</title><meta name="description" content="画像生成AIをローカルで動かすには、まずGPUのVRAM容量を確認します。8GB・12GB・16GB・24GB以上で動くモデルの違い、2026年10月時点のGPU価格の目安、ComfyUI Desktopの導入手順を公式ドキュメントをもとにまとめました。"><link rel="canonical" href="https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/">
+<meta property="og:type" content="article"><meta property="og:title" content="画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ"><meta property="og:description" content="画像生成AIをローカルで動かすには、まずGPUのVRAM容量を確認します。8GB・12GB・16GB・24GB以上で動くモデルの違い、2026年10月時点のGPU価格の目安、ComfyUI Desktopの導入手順を公式ドキュメントをもとにまとめました。">
+<meta property="og:url" content="https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/"><meta property="og:site_name" content="画像生成AI比較"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://gazou.aobaworks.com/og/gazou-seisei-ai-local-pc-gpu.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta property="article:published_time" content="2026-10-19">
+<meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#151719" media="(prefers-color-scheme: dark)"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='3' y='3' width='58' height='58' rx='8' fill='%23fbfaf6' stroke='%231d2329' stroke-width='5'/%3E%3Ctext x='32' y='45' font-size='36' font-weight='700' text-anchor='middle' fill='%231d2329' font-family='sans-serif'%3E画%3C/text%3E%3C/svg%3E">
+<link rel="alternate" type="application/rss+xml" title="画像生成AI比較" href="/feed.xml"><style>:root{--ink:#1d2329;--sub:#5a6470;--line:#e2dfd6;--bg:#fbfaf6;--card:#fff;--accent:#1f6f5c;--code:#f1efe8;--mark:#7a5c1e;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--ink:#e6e5df;--sub:#a5abb1;--line:#363a3e;--bg:#151719;--card:#1c1f22;--accent:#72c6ac;--code:#24282b;--mark:#d8b56c}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.9 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;overflow-wrap:break-word;line-break:strict}
+a{color:var(--accent);text-underline-offset:.18em}a:hover{text-decoration-thickness:2px}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header,main,footer{max-width:740px;margin:0 auto;padding:0 20px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 18px;padding-top:18px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.brand{font-weight:800;font-size:1.1875rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+.gnav{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:0.875rem}.gnav a{color:var(--sub);text-decoration:none}.gnav a:hover{color:var(--accent)}
+.tag{color:var(--sub);font-size:0.875rem;margin:0;flex-basis:100%;line-height:1.6}
+h1{font-size:clamp(25px,5.6vw,33px);line-height:1.4;margin:22px 0 10px;letter-spacing:.01em}
+h2{font-size:clamp(21px,4.4vw,24px);line-height:1.45;margin:44px 0 12px;padding-top:14px;border-top:2px solid var(--ink)}
+h3{font-size:1.1875rem;line-height:1.5;margin:30px 0 8px;padding-left:10px;border-left:4px solid var(--mark)}h4{font-size:1.0625rem;margin:22px 0 6px}
+p{margin:0 0 1.05em}li{margin:.25em 0}ul,ol{padding-left:1.4em}strong{font-weight:700}
+.crumbs{font-size:0.8438rem;color:var(--sub);margin:16px 0 0;line-height:1.6}.crumbs a{color:var(--sub)}.crumbs span{margin:0 6px}
+.meta{color:var(--sub);font-size:0.875rem;margin:4px 0 10px}.meta time{font-variant-numeric:tabular-nums}
+.hero{display:block;width:100%;height:auto;aspect-ratio:1200/630;border:1px solid var(--line);border-radius:6px;margin:10px 0 6px}
+.tags{margin:8px 0 14px;line-height:2}.tags a{display:inline-block;font-size:0.8125rem;line-height:1.7;padding:0 10px;margin:0 6px 4px 0;border:1px solid var(--line);border-radius:999px;color:var(--sub);text-decoration:none;background:var(--card)}
+.tags a:hover{border-color:var(--accent);color:var(--accent)}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 20px 10px;margin:20px 0 28px}.toc p{margin:0 0 4px;font-size:0.9375rem}
+.toc ol{margin:0;padding-left:1.4em;font-size:0.9375rem;line-height:1.7}.toc a{color:var(--ink);text-decoration:none}.toc a:hover{color:var(--accent);text-decoration:underline}
+.note{font-size:0.875rem;color:var(--sub);background:var(--code);border-radius:6px;padding:8px 12px}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.88em}
+pre{background:var(--code);border:1px solid var(--line);padding:14px 16px;border-radius:6px;overflow:auto;font-size:0.875rem;line-height:1.6}pre code{background:none;padding:0;font-size:inherit}
+blockquote{margin:18px 0;padding:6px 16px;border-left:3px solid var(--accent);color:var(--sub);background:var(--card)}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:0.9375rem;line-height:1.65}.tbl table{margin:0}main>table{display:block;overflow-x:auto;margin:18px 0}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;min-width:6.5em}th{background:var(--code);font-weight:700}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}tbody tr:nth-child(even) td{background:rgba(127,127,127,.05)}
+.tbl th:first-child,.tbl td:first-child,main>table th:first-child,main>table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);box-shadow:inset -1px 0 0 var(--line)}.tbl thead th:first-child,main>table thead th:first-child{z-index:2;background:var(--s2,var(--code))}
+img{max-width:100%;height:auto;border-radius:4px}
+.list{list-style:none;padding:0;margin:8px 0}.list li{padding:16px 0;border-bottom:1px solid var(--line);margin:0}
+.list a{font-size:1.1875rem;font-weight:700;line-height:1.5;text-decoration:none;color:var(--ink)}.list a:hover{color:var(--accent);text-decoration:underline}
+.list p{margin:6px 0 0;color:var(--sub);font-size:0.9375rem;line-height:1.75}.list .d{font-size:0.8125rem;color:var(--sub);margin:0 0 2px}
+.lead{color:var(--sub);font-size:1rem}.hubs{margin:10px 0 24px}
+.related{margin-top:44px;padding-top:6px;border-top:1px solid var(--line)}.related h2{margin-top:26px}
+.list h2,.list h3{margin:2px 0 6px;font-size:1.1875rem;line-height:1.5}.list h2 a,.list h3 a{color:var(--ink);text-decoration:none}
+.toc-h{font-weight:700;margin:0 0 6px}
+.brand-sub{font-weight:400;font-size:0.875rem;color:var(--sub);margin-left:10px}
+.site-foot p,body>footer p{margin:0 0 6px}
+.credit{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-size:0.8438rem;color:var(--sub)}
+footer{color:var(--sub);font-size:0.8438rem;padding:28px 20px 40px;margin-top:56px;border-top:2px solid var(--ink);line-height:2}footer a{color:var(--sub)}
+td:first-child{min-width:8.5em}
+@media (max-width:600px){body{font-size:1.0312rem;line-height:1.85}header{padding-top:14px;padding-bottom:10px}header .tag{display:none}.list a{font-size:1.0938rem}th,td{padding:8px 10px;font-size:0.9062rem}}/* ui.py(共通の動く部品) */
+/* デザインの決まり v2(2026-10-17 design-harness/docs/デザインシステムの研究.md: 押す場所44px・見えるフォーカス枠) */
+button,.btn,.ui-menu-btn,.ui-fab button,.ui-fab a,.ui-tablist button{min-height:44px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pills a,.tags a{min-height:32px;display:inline-flex;align-items:center}
+body > header{position:relative;padding-right:120px}body > header .ui-menu-btn{position:absolute;right:16px;top:14px}
+@media (max-width:700px){.site-nav,body > header .gnav{display:none}body > header{padding-right:100px}}
+.ui-bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--accent);z-index:30}
+.ui-menu-btn{margin-left:auto;align-self:center;font:inherit;font-size:.9375rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.ui-menu-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ui-scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.ui-drawer{position:fixed;top:0;right:0;bottom:0;width:min(360px,88vw);background:var(--card);border-left:1px solid var(--line);
+  transform:translateX(100%);transition:transform .22s ease;z-index:41;overflow-y:auto;padding:18px 20px 40px}
+.ui-open .ui-scrim{opacity:1;pointer-events:auto}.ui-open .ui-drawer{transform:none}
+.ui-drawer h2{font-size:.8125rem;letter-spacing:.02em;color:var(--sub);margin:22px 0 8px;font-weight:700}
+.ui-drawer .ui-x{float:right;font:inherit;font-size:.875rem;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;color:var(--sub)}
+.ui-drawer ul,.ui-drawer ol{list-style:none;padding:0;margin:0}.ui-drawer li{margin:0;border-bottom:1px solid var(--line)}
+.ui-drawer li a{display:block;padding:10px 4px;text-decoration:none;color:var(--ink);font-size:.96875rem;line-height:1.45}
+.ui-drawer li a:hover,.ui-drawer li a.on{color:var(--accent)}.ui-drawer li a.on{font-weight:700;border-left:3px solid var(--accent);padding-left:9px}
+.ui-fab{position:fixed;right:16px;bottom:18px;z-index:25;display:flex;gap:8px}
+.ui-fab button,.ui-fab a{font:inherit;font-size:.90625rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:9px 16px;cursor:pointer;text-decoration:none}
+.ui-fab .ui-next{background:var(--accent);border-color:var(--accent);color:var(--card);display:none}.ui-fab .ui-next.show{display:inline-block}
+.ui-fab .ui-top{display:none}.ui-fab .ui-top.show{display:inline-block}
+.ui-tabs{margin:8px 0 26px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.ui-tablist{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.ui-tablist button{flex:none;font:inherit;font-size:.9375rem;background:none;border:0;border-bottom:3px solid transparent;color:var(--sub);padding:12px 16px;cursor:pointer;white-space:nowrap}
+.ui-tablist button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent);font-weight:700}
+.ui-panel{padding:6px 18px 4px}.ui-panel[hidden]{display:none}.ui-panel>h3:first-child{margin-top:12px}
+.ui-faq details{border-bottom:1px solid var(--line)}.ui-faq details:first-of-type{border-top:1px solid var(--line)}
+.ui-faq summary{cursor:pointer;list-style:none;padding:14px 30px 14px 2px;font-weight:700;position:relative;line-height:1.45}
+.ui-faq summary::-webkit-details-marker{display:none}
+.ui-faq summary::after{content:"+";position:absolute;right:6px;top:12px;font-weight:400;font-size:1.25rem;color:var(--sub)}
+.ui-faq details[open] summary::after{content:"−"}.ui-faq .ui-a{padding:0 2px 8px}
+.ui-sum{border:2px solid var(--ink);border-radius:10px;background:var(--card);padding:14px 18px 10px;margin:4px 0 26px}
+.ui-sum-h{font-weight:800;font-size:.9375rem;margin:0 0 6px}.ui-sum ul{margin:0 0 8px;padding-left:20px}.ui-sum li{margin:4px 0;font-size:1.03125rem;line-height:1.55}
+.ui-sum-who{font-size:.9375rem;color:var(--sub);margin:0 0 4px;border-top:1px solid var(--line);padding-top:8px}
+.table-wrap{max-height:80vh;overflow:auto}.table-wrap thead th{position:sticky;top:0;z-index:1}
+.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--card);z-index:1}.table-wrap thead th:first-child{z-index:2;background:var(--pre,var(--card))}
+.ui-kicker{margin:28px 0 4px;font-weight:700;color:var(--accent);font-size:.9375rem}.ui-hero{font-size:2.125rem;line-height:1.35;margin:0 0 22px;max-width:22em;text-wrap:balance;word-break:auto-phrase}
+@media (max-width:600px){.ui-hero{font-size:1.625rem}}
+.ui-cards{display:grid;grid-template-columns:1fr;gap:18px;list-style:none;padding:0}
+.ui-cards>li{display:grid;grid-template-columns:200px 1fr;gap:4px 18px;align-items:start;border:1px solid var(--line)!important;border-radius:12px;background:var(--card);padding:14px!important;margin:0}
+.ui-cards>li>*{grid-column:2}.ui-cards .ui-thumb-a{grid-column:1;grid-row:1 / span 4}
+.ui-cards .ui-thumb{display:block;width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.ui-cards>li.ui-noimg{grid-template-columns:1fr}.ui-cards>li.ui-noimg>*{grid-column:1}
+.ui-cards>li:hover{border-color:var(--accent)!important}
+@media (max-width:600px){.ui-cards>li{grid-template-columns:1fr}.ui-cards>li>*,.ui-cards .ui-thumb-a{grid-column:1}.ui-cards .ui-thumb-a{grid-row:auto}}
+.ui-side{display:none}
+@media (min-width:1240px){.ui-side{display:block;position:fixed;top:96px;left:calc(50% + 400px);width:260px;max-height:calc(100vh - 140px);overflow-y:auto;font-size:.875rem;border-left:1px solid var(--line);padding-left:14px}
+.ui-side p{font-weight:700;color:var(--sub);margin:0 0 6px;font-size:.8125rem}.ui-side ol{list-style:none;padding:0;margin:0}.ui-side li{margin:0}
+.ui-side a{display:block;padding:5px 0;color:var(--sub);text-decoration:none;line-height:1.4}.ui-side a:hover,.ui-side a.on{color:var(--accent)}.ui-side a.on{font-weight:700}
+.ui-fab button{display:none}}
+@media (prefers-reduced-motion:reduce){.ui-drawer,.ui-scrim{transition:none}html{scroll-behavior:auto}}
+@media print{.ui-bar,.ui-fab,.ui-drawer,.ui-scrim,.ui-menu-btn{display:none}}
+:root{--font-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",Meiryo,system-ui,sans-serif;--font-head:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",Meiryo,system-ui,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Noto Sans Mono",monospace;--mark-ch:"画";--mark-fs:1rem;--fs-body:1.0625rem;--lh-body:1.85;--ls-body:.02em;--ls-head:.02em;--measure:40em;--page:1120px;--col:44rem;--danger-bg:#faf3e8;--danger-tx:#6e4a12;--danger-bd:#c8a46e;--warn-bg:#faf3e8;--warn-tx:#6e4a12;--warn-bd:#c8a46e;--ok-bg:#f5f6f8;--ok-tx:#1b1f24;--code-bg:var(--s2);--code-ink:var(--ink);--code-sub:var(--sub);--code-line:var(--line);--bg:#ffffff;--card:#ffffff;--surface:#ffffff;--s2:#f5f6f8;--pre:#f5f6f8;--ink:#1b1f24;--sub:#4f5964;--line:#e3e6ea;--border:#8a939d;--accent:#56483f;--link:#56483f;--on-accent:#ffffff;--due-bg:#faf3e8;--due-tx:#6e4a12;--focus:#56483f;--head-bg:#ffffff;--head-ink:#1b1f24;--head-sub:#4f5964;--hover:#f6f7f9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14151a;--card:#1b1d23;--surface:#1b1d23;--s2:#202229;--pre:#202229;--ink:#e6e9ec;--sub:#a9b2bc;--line:#2f363e;--border:#6b7681;--accent:#cdbbaf;--link:#cdbbaf;--on-accent:#111418;--due-bg:#2e2617;--due-tx:#e8cfa3;--focus:#cdbbaf;--head-bg:#14151a;--head-ink:#e6e9ec;--head-sub:#a9b2bc;--hover:#1f252c;--danger-bg:#2e2617;--danger-tx:#e8cfa3;--danger-bd:#a88552;--warn-bg:#2e2617;--warn-tx:#e8cfa3;--warn-bd:#a88552;--ok-bg:#1d2228;--ok-tx:#e6e9ec;}}
+:root[data-theme=dark]{--bg:#14151a;--card:#1b1d23;--surface:#1b1d23;--s2:#202229;--pre:#202229;--ink:#e6e9ec;--sub:#a9b2bc;--line:#2f363e;--border:#6b7681;--accent:#cdbbaf;--link:#cdbbaf;--on-accent:#111418;--due-bg:#2e2617;--due-tx:#e8cfa3;--focus:#cdbbaf;--head-bg:#14151a;--head-ink:#e6e9ec;--head-sub:#a9b2bc;--hover:#1f252c;--danger-bg:#2e2617;--danger-tx:#e8cfa3;--danger-bd:#a88552;--warn-bg:#2e2617;--warn-tx:#e8cfa3;--warn-bd:#a88552;--ok-bg:#1d2228;--ok-tx:#e6e9ec;}
+
+/* ===== 見た目 v3(ui.py theme_css)。古い CSS のあとに読み込み、上書きする ===== */
+html{scroll-padding-top:16px}
+body{font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);letter-spacing:var(--ls-body);background:var(--bg);color:var(--ink);
+  font-kerning:normal;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+html[lang=ja] body{line-break:strict;overflow-wrap:anywhere;text-autospace:ideograph-alpha;text-spacing-trim:normal}
+h1,h2,h3,h4{font-family:var(--font-head);letter-spacing:var(--ls-head);color:var(--ink);text-wrap:balance}
+html[lang=ja] h1,html[lang=ja] h2,html[lang=ja] h3{font-feature-settings:"palt";word-break:auto-phrase}
+h1,.ui-hero{font-size:clamp(1.75rem,1.35rem + 1.7vw,2.5rem);line-height:1.25;font-weight:750;margin:.5rem 0 1rem}
+html[lang=ja] h1,html[lang=ja] .ui-hero{line-height:1.45;font-weight:700}
+h2{font-size:clamp(1.375rem,1.2rem + .7vw,1.75rem);line-height:1.3;font-weight:700;margin:3rem 0 .75rem;padding-top:0;border-top:0}
+html[lang=ja] h2{line-height:1.5}
+h3{font-size:clamp(1.125rem,1.06rem + .3vw,1.25rem);line-height:1.4;font-weight:700;margin:2rem 0 .5rem;padding-left:0;border-left:0}
+h4{font-size:1.0625rem;margin:1.5rem 0 .4rem}
+p,ul,ol{margin:0 0 1.1em}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:2px}
+strong{font-weight:700}
+html[lang=ja] em,html[lang=ja] i{font-style:normal;font-weight:700}
+.lede,.lead{font-size:1.1875rem;line-height:1.6;color:var(--sub);max-width:var(--measure)}
+html[lang=ja] .lede,html[lang=ja] .lead{font-size:1.0625rem;line-height:1.85}
+.meta,.crumbs{font-size:.875rem;color:var(--sub)}
+.crumbs{margin:1.25rem 0 0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;text-overflow:ellipsis}.crumbs a{color:var(--sub)}
+.ui-kicker{display:none}
+main>h1:first-of-type,.ui-hero{margin-top:2.5rem}main>.crumbs+h1{margin-top:.75rem}
+
+/* ヘッダー: 全幅の帯・中は --page の幅。データのサイトは濃い帯(信頼・公的データの読み物の型: USWDS/GOV.UK の考え方。色は自分のもの) */
+body>header,body>header.site-head{max-width:none;margin:0;background:var(--head-bg);color:var(--head-ink);border-bottom:1px solid var(--line);padding:0}
+body>header:not(.site-head){display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;padding:12px max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px))}
+.site-head .wrap{max-width:var(--page);display:flex;align-items:center;gap:8px 20px;flex-wrap:nowrap;padding-top:12px;padding-bottom:12px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--head-ink);text-decoration:none;font-family:var(--font-head);font-weight:750;font-size:1.25rem;letter-spacing:-.01em;line-height:1.2;min-height:44px}
+html[lang=ja] .brand{letter-spacing:.04em;font-weight:700}
+.brand svg{display:none}
+.brand::before{content:var(--mark-ch);flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:6px;background:var(--accent);color:var(--on-accent);
+  font:700 var(--mark-fs)/1 var(--font-body);letter-spacing:0}
+.brand-sub{font-family:var(--font-body);font-weight:400;font-size:.875rem;color:var(--head-sub);letter-spacing:0;margin-left:4px}
+.site-nav,.gnav{display:flex;gap:4px;margin-left:auto;font-size:.9375rem}
+.site-nav a,.gnav a{color:var(--head-sub);text-decoration:none;padding:10px 12px;margin:0;border-radius:6px;min-height:44px;display:inline-flex;align-items:center}
+.site-nav a:hover,.gnav a:hover{color:var(--head-ink);background:rgba(127,127,127,.14)}
+body>header .tag{order:5;flex-basis:100%;font-size:.875rem;color:var(--head-sub);margin:-4px 0 0;line-height:1.5}
+body>header .ui-menu-btn{position:static;order:4;margin-left:8px;background:transparent;color:var(--head-ink);border:1px solid var(--border);border-radius:6px;font-size:.9375rem;padding:8px 14px}
+body>header:not(.site-head){padding-right:max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px))}
+.site-head{padding-right:0}
+@media (max-width:700px){body>header .ui-menu-btn{margin-left:auto}.brand-sub{display:none}body>header .site-nav,body>header .gnav{display:none}}
+.brand{white-space:nowrap}
+
+/* 本文の列。データのサイトは広い面(表)+読む文は --measure まで(GOV.UK の 2/3 の列の考え方) */
+main{padding-bottom:3rem}
+.disclaimer{margin:20px 0 0;padding:10px 16px;border:0;border-left:4px solid var(--border);background:var(--s2);color:var(--sub);font-size:.875rem;line-height:1.55;border-radius:0 6px 6px 0;max-width:var(--measure)}
+.intro{padding:2.5rem 0 .5rem}
+blockquote{border-left:4px solid var(--border);background:transparent;color:var(--ink);padding:.25rem 0 .25rem 1rem;border-radius:0;margin:1.5rem 0}
+
+/* ボタン・チップ(押す場所 44px: Apple HIG / Material 3 は 48dp) */
+.ui-cta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:1.5rem 0}
+.ui-btn{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border:1px solid var(--border);border-radius:6px;background:var(--card);
+  color:var(--ink);font-weight:600;text-decoration:none;line-height:1.25}
+.ui-btn:hover{border-color:var(--ink);text-decoration:none}
+.ui-btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ui-btn-primary:hover{filter:brightness(1.08);border-color:var(--accent);color:var(--on-accent)}
+.ui-cta-note{color:var(--sub);font-size:.875rem}
+.ui-group{margin:1.25rem 0}
+.ui-group-h{font-weight:700;font-size:.9375rem;margin:0 0 .5rem;color:var(--ink)}
+.ui-chips{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.ui-chips li{margin:0}
+.ui-chips a{display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);text-decoration:none;font-size:.9375rem;line-height:1.3}
+.ui-chips a:hover{border-color:var(--accent);color:var(--accent)}
+@media (pointer:coarse){.ui-chips a{min-height:44px}}
+.pills a,.tags a{border-radius:6px;border-color:var(--line);color:var(--ink);background:var(--card);font-size:.875rem;padding:4px 12px}
+.pills a:hover,.tags a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ホームの「いまの数字」と期限が近い表(USWDS の summary box と collection の考え方) */
+.ui-dash{margin:2rem 0 1rem}
+.ui-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;border:1px solid var(--line);border-radius:8px;background:var(--line);margin:0 0 .5rem;overflow:hidden}
+.ui-stats>div{padding:14px 18px;background:var(--card)}
+.ui-stats b{display:block;font-size:1.75rem;line-height:1.2;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.01em;color:var(--ink)}
+.ui-stats span{display:block;font-size:.875rem;color:var(--sub);line-height:1.45;margin-top:2px}
+.ui-src{font-size:.8125rem;color:var(--sub);margin:0 0 1.5rem}
+.ui-dash-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 .75rem}
+.ui-dash-h h2{margin:0}
+.ui-dash-h a{font-weight:600}
+@media (max-width:600px){.ui-stats{grid-template-columns:1fr 1fr}.ui-stats>div:last-child:nth-child(odd){grid-column:1/-1}.ui-stats b{font-size:1.375rem}.ui-stats>div{padding:12px 14px}.lede,.lead{font-size:1.0625rem}h1,.ui-hero{font-size:1.75rem}
+  .ui-cta .ui-btn{flex:1 1 100%;justify-content:center}.disclaimer{font-size:.8125rem;padding:8px 12px}}
+
+/* 表(デジタル庁: 数字は右よせ・見出しは太字・スマホは表の中だけ動かす / Carbon: 行の高さをそろえる) */
+.table-wrap,.tbl{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 1.5rem;overflow:auto}
+table{font-size:.9375rem;line-height:1.5;font-variant-numeric:tabular-nums;border-collapse:collapse;width:100%}
+th,td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{background:var(--s2);color:var(--ink);font-weight:700;font-size:.875rem;border-bottom:2px solid var(--border);white-space:nowrap}
+tbody tr:nth-child(even) td{background:transparent}
+tbody tr:hover td{background:var(--hover)}
+td:first-child a{font-weight:600}
+td.ui-num,th.ui-num{text-align:right;white-space:nowrap}
+td.ui-date{white-space:nowrap}
+button[data-sort]{font:inherit;font-size:.875rem;min-height:44px;padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer}
+button[data-sort][aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+/* 見出しの行がない表 = 項目と値(GOV.UK の summary list の型) */
+main table:not(:has(thead)){border-top:1px solid var(--line);margin:1rem 0 2rem;font-size:1rem;max-width:52rem}
+main table:not(:has(thead)) th{background:transparent;width:32%;font-weight:700;color:var(--ink);padding:14px 16px 14px 0;white-space:normal}
+main table:not(:has(thead)) td{padding:14px 0}
+main table:not(:has(thead)) tr:hover td{background:transparent}
+/* スマホ: 3列以上の表は1件ずつの箱に積む(USWDS の stacked table。ui.js が data-label をつける) */
+@media (max-width:640px){
+  table.ui-stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  table.ui-stack,table.ui-stack tbody,table.ui-stack tr,table.ui-stack td{display:block;width:auto}
+  table.ui-stack tr{padding:12px 14px;border-bottom:1px solid var(--line)}
+  table.ui-stack td{border:0;padding:2px 0;min-width:0;position:static;background:transparent!important;display:grid;grid-template-columns:7.5em 1fr;gap:8px;font-size:.9375rem}
+  table.ui-stack td::before{content:attr(data-label);color:var(--sub);font-size:.8125rem;font-weight:600;padding-top:2px}
+  table.ui-stack td:first-child{display:block;font-size:1rem;margin-bottom:4px}
+  table.ui-stack td:first-child::before{content:none}
+  table.ui-stack caption{display:block;width:auto;text-align:left}
+  table.ui-stack td.ui-num{text-align:left}
+  .table-wrap:has(table.ui-stack),.tbl:has(table.ui-stack){max-height:none;overflow:visible}
+}
+/* 期限の札(色だけにせず「あと3日」と文字で) */
+.ui-due{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:4px;font-size:.8125rem;font-weight:700;line-height:1.5;white-space:nowrap;border:1px solid transparent;vertical-align:1px}
+.ui-due-now{background:var(--due-bg);color:var(--due-tx)}
+.ui-due-soon{background:var(--danger-bg);color:var(--danger-tx);border-color:var(--danger-bd)}
+.ui-due-week{background:var(--warn-bg);color:var(--warn-tx);border-color:var(--warn-bd)}
+
+/* 記事の一覧 */
+.list .when,.list .d{font-size:.875rem;color:var(--sub)}
+.ui-cards{gap:16px}
+.ui-cards>li{border-radius:8px;padding:16px!important;border-color:var(--line)!important;background:var(--card)}
+.ui-cards h2,.ui-cards h3{font-size:1.1875rem;line-height:1.4;margin:2px 0 6px}
+.ui-cards h2 a,.ui-cards h3 a,.ui-cards>li>a{color:var(--ink);text-decoration:none}
+.ui-cards>li:hover h2 a,.ui-cards>li:hover h3 a{color:var(--accent);text-decoration:underline}
+.ui-cards p{font-size:.9375rem;line-height:1.65;color:var(--sub)}
+
+/* 目次・要点・注意書き */
+.toc{background:var(--card);border:1px solid var(--line);border-radius:8px}
+.toc-h{text-transform:none;letter-spacing:0;font-size:.9375rem;color:var(--ink)}
+.ui-sum{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;background:var(--card)}
+.note{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;padding:1rem 0 0;font-size:.875rem;color:var(--sub)}
+.pr-note,.ai-note{font-size:.875rem}
+
+/* コード(Stripe・Linear の文書の型: 暗い面・言語のラベル・コピーのボタン) */
+code{font-family:var(--font-mono);font-size:.875em;background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:.05em .35em}
+pre{position:relative;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);border-radius:8px;padding:16px 18px;font-size:.875rem;line-height:1.65;overflow-x:auto;margin:1.25rem 0 1.75rem;letter-spacing:0;tab-size:2}
+pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+pre[data-lang]{padding-top:44px}
+pre[data-lang]::before{position:absolute;left:0;right:0;top:0;padding:8px 18px;margin:0;border-bottom:1px solid rgba(127,127,127,.25);font:600 .75rem/1.4 var(--font-mono);color:var(--code-sub);text-transform:none;letter-spacing:0}
+.ui-copy{position:absolute;top:5px;right:6px;min-height:30px!important;font:600 .75rem/1 var(--font-body);color:var(--code-sub);background:transparent;border:1px solid rgba(127,127,127,.35);border-radius:5px;padding:6px 10px;cursor:pointer}
+.ui-copy:hover{color:var(--code-ink);border-color:var(--code-sub)}
+pre:not([data-lang]) .ui-copy{top:8px}
+
+/* フッター */
+body>footer,.site-foot{max-width:none;margin:4rem 0 0;padding:0;background:var(--s2);border-top:1px solid var(--line);color:var(--sub);font-size:.875rem;line-height:1.8}
+body>footer:not(.site-foot){padding:28px max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px)) 40px}
+.site-foot .wrap{max-width:var(--page);padding-top:28px;padding-bottom:40px}
+body>footer a,.site-foot a{color:var(--sub)}
+.sisters{margin-top:.75rem}
+@media print{body>header,body>footer{background:none;color:#000}}
+
+caption.ui-cap{caption-side:top;text-align:left;font-size:.875rem;line-height:1.5;color:var(--sub);padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
+main table:not(:has(thead)) caption.ui-cap{padding:0 0 10px;border:0;background:transparent}
+.table-wrap table:not(:has(thead)),.tbl table:not(:has(thead)){border-top:0;margin:0;max-width:none}
+.table-wrap table:not(:has(thead)) :is(th,caption.ui-cap),.tbl table:not(:has(thead)) :is(th,caption.ui-cap){padding-left:16px}
+.table-wrap table:not(:has(thead)) td,.tbl table:not(:has(thead)) td{padding-right:16px}
+caption.ui-cap-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}
+time{font-variant-numeric:tabular-nums}
+
+body>header,body>header.site-head{background:var(--head-bg);border-bottom:1px solid var(--line)}
+.brand::before{content:none;display:none}
+.brand{font-size:1.1875rem}
+body>header .tag{display:none}
+.ui-due-now,.ui-due-soon{background:var(--warn-bg);color:var(--warn-tx);border-color:var(--warn-bd)}
+.ui-due-week{background:transparent;color:var(--sub);border-color:var(--line)}
+.ui-find{border:1px solid var(--line);border-radius:8px;background:var(--s2);padding:20px 24px;margin:1.25rem 0 2rem}
+.ui-find>h2{font-size:1.125rem;margin:0 0 12px;line-height:1.4}
+.ui-jump{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:0}
+.ui-jump label{flex-basis:100%;font-weight:600;font-size:.875rem;color:var(--sub);margin:0}
+.ui-jump select{font:inherit;font-size:1rem;min-height:48px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--ink);flex:1 1 260px;max-width:420px;min-width:0;text-overflow:ellipsis}
+.ui-jump .ui-btn{min-height:48px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
+.ui-find .ui-group{margin:18px 0 0}
+.ui-find .ui-group-h{font-size:.875rem;color:var(--sub)}
+html[lang=ja] .brand{letter-spacing:.02em}
+@media (max-width:600px){.ui-find .ui-same{display:none}.ui-find{padding:16px}.ui-jump select{max-width:100%;width:100%;min-width:0;flex-basis:100%;box-sizing:border-box}.ui-jump .ui-btn{flex:1 1 100%;justify-content:center}}
+.ui-lede{font-size:1.125rem;line-height:1.75;color:var(--sub);max-width:var(--measure);margin:-.25rem 0 1.75rem}
+html[lang=en] .ui-lede{line-height:1.6}
+.ui-topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;list-style:none;padding:0;margin:0 0 1rem}
+.ui-topics li{margin:0}
+.ui-topics a{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:64px;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);text-decoration:none}
+.ui-topics a b{font-size:1rem;font-weight:700;line-height:1.35}
+.ui-topics a span{font-size:.8125rem;color:var(--sub)}
+.ui-topics a:hover{border-color:var(--accent)}.ui-topics a:hover b{color:var(--accent)}
+
+/* 記事のサイト: 読む列は狭く、トップだけ広く(カードを並べる) */
+.wrap{max-width:var(--page)}
+main.wrap,body>main{max-width:calc(var(--col) + 48px)}
+main.wrap:has(>.intro),body>main:has(.ui-hero){max-width:var(--page)}
+main:has(>.intro) .ui-cards,main:has(.ui-hero) .ui-cards{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+main:has(>.intro) .ui-cards>li,main:has(.ui-hero) .ui-cards>li{grid-template-columns:1fr}
+main:has(>.intro) .ui-cards>li>*,main:has(.ui-hero) .ui-cards>li>*{grid-column:1}
+main:has(>.intro) .ui-cards .ui-thumb-a,main:has(.ui-hero) .ui-cards .ui-thumb-a{grid-row:auto;grid-column:1;margin-bottom:8px}
+main:has(>.intro) .intro>:is(p,h1),main:has(.ui-hero)>:is(p,h1){max-width:var(--measure)}
+body>header,body>header.site-head{background:var(--bg)}
+article p,article li{max-width:var(--col)}
+.ui-side{left:calc(50% + 24px + var(--col) / 2)}
+
+/* 先頭の記事を大きく(トップだけ・広い画面) */
+@media (min-width:860px){
+main:has(.ui-hero) .ui-cards>li:first-child,main:has(>.intro) .ui-cards>li:first-child{grid-column:1/-1;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:6px 32px;padding:20px!important;align-items:center}
+main:has(.ui-hero) .ui-cards>li:first-child>*,main:has(>.intro) .ui-cards>li:first-child>*{grid-column:2}
+main:has(.ui-hero) .ui-cards>li:first-child .ui-thumb-a,main:has(>.intro) .ui-cards>li:first-child .ui-thumb-a{grid-column:1;grid-row:1 / span 6;margin:0}
+main:has(.ui-hero) .ui-cards>li:first-child>a:not(.ui-thumb-a),main:has(.ui-hero) .ui-cards>li:first-child h3,main:has(>.intro) .ui-cards>li:first-child h3{font-size:1.5rem;line-height:1.4}
+main:has(.ui-hero) .ui-cards>li:first-child p:not(.d):not(.when),main:has(>.intro) .ui-cards>li:first-child p:not(.d):not(.when){font-size:1rem}
+}
+.ui-cards>li>a:not(.ui-thumb-a){font-weight:700;font-size:1.125rem;line-height:1.45;display:block;margin:2px 0 6px;color:var(--ink);text-decoration:none}
+.ui-cards>li:hover>a:not(.ui-thumb-a){color:var(--accent);text-decoration:underline}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ", "image": ["https://gazou.aobaworks.com/og/gazou-seisei-ai-local-pc-gpu.png"], "description": "画像生成AIをローカルで動かすには、まずGPUのVRAM容量を確認します。8GB・12GB・16GB・24GB以上で動くモデルの違い、2026年10月時点のGPU価格の目安、ComfyUI Desktopの導入手順を公式ドキュメントをもとにまとめました。", "datePublished": "2026-10-19", "dateModified": "2026-10-19", "mainEntityOfPage": "https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/", "url": "https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/", "inLanguage": "ja", "keywords": "画像生成AI, ローカル, GPU, VRAM, ComfyUI, Stable Diffusion, FLUX", "isPartOf": {"@type": "WebSite", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/"}, "author": {"@type": "Organization", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/about/", "parentOrganization": {"@type": "Organization", "name": "Aoba Works", "url": "https://aobaworks.com/"}}, "publisher": {"@type": "Organization", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/", "parentOrganization": {"@type": "Organization", "name": "Aoba Works", "url": "https://aobaworks.com/"}, "publishingPrinciples": "https://gazou.aobaworks.com/about/", "logo": "https://gazou.aobaworks.com/og/_site-e12cfe71.png", "contactPoint": {"@type": "ContactPoint", "contactType": "editorial", "email": "shigoto.ai.note@gmail.com"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://gazou.aobaworks.com/"}, {"@type": "ListItem", "position": 2, "name": "画像生成AI", "item": "https://gazou.aobaworks.com/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/"}, {"@type": "ListItem", "position": 3, "name": "画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ", "item": "https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "GPUが無いノートPCでも画像生成AIをローカルで動かせますか?", "acceptedAnswer": {"@type": "Answer", "text": "動かせます。ComfyUIは--cpuで、GPUが無くても動きます(ComfyUI 動作環境)。ただ1枚に時間がかかるので、普段使うならクラウドの無料枠から試すほうが現実的です。"}}, {"@type": "Question", "name": "VRAM 8GBのGPUではもう足りませんか?", "acceptedAnswer": {"@type": "Answer", "text": "SD1.5やSDXLなら、8GBでも十分に使えます。SD3.5 Mediumは公式で9.9GB(テキストエンコーダーを除く)なので、8GBでは設定の工夫が必要です(Stability AI)。新しいモデルを中心に使うなら、16GBが目安です。"}}, {"@type": "Question", "name": "Macでもローカルで動きますか?", "acceptedAnswer": {"@type": "Answer", "text": "M1以降のApple Silicon Macなら、ComfyUIが公式に対応しています(ComfyUI 動作環境)。ただ、解説記事や配布されているモデルはNVIDIAのGPU向けが多く、設定を自分で調べる場面が増えます。"}}, {"@type": "Question", "name": "ローカルで作った画像は商用利用できますか?", "acceptedAnswer": {"@type": "Answer", "text": "使ったモデルのライセンスで決まります。Stable Diffusion 3.5は年間売上100万ドル未満なら無料で商用利用でき(Stability AI)、FLUX.2 [klein] 4BはApache 2.0です(Hugging Face)。確認のしかたは規約のどこを確認するかにまとめています。"}}]}</script>
+</head><body><header><a class="brand" href="/">画像生成AI比較</a><nav class="gnav" aria-label="メニュー"><a href="/">記事一覧</a><a href="/tag/">テーマ</a><a href="/about/">このサイトについて</a></nav><p class="tag">画像生成AIの比較と使い方(無料枠、商用利用の規約、プロンプトの書き方)を公式情報で解説</p></header>
+<main><nav class="crumbs" aria-label="パンくずリスト"><a href="/">ホーム</a><span>›</span><a href="/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/">画像生成AI</a><span>›</span>画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ</nav><article><h1>画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ</h1><p class="meta">運営 <a href="/about/">Aoba Works</a> · 公開 <time datetime="2026-10-19">2026年10月19日</time> · 17分で読めます</p><p class="meta made-note">この記事の作り方: AI が各サービスの公式の情報(下の「出典」)を読んで書き、出典の無い料金・規約の文や作り話を落とす自動の点検に通してから公開しています。公式で確かめた日: <time datetime="2026-10-19">2026-10-19</time>(<a href="/sources/">確かめた公式ページの一覧</a>)</p><p class="tags"><a href="/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/">#画像生成AI</a> <a href="/tag/stable-diffusion/">#Stable Diffusion</a></p><p>画像生成AIをローカルで動かすときに大事なのは、GPUのVRAM(ビデオメモリ)の量です。公式の数字では、Stable Diffusion 3.5 Mediumは9.9GB、FLUX.2 [klein] 4Bはおよそ13GBのVRAMを使います。これから買うなら、VRAM 16GBのGPUを選ぶと、多くのモデルを無理なく動かせます。GPUが無いPCやMacなら、無料のツールのComfyUIを手持ちの環境で試すか、クラウドの無料枠から始めましょう。</p>
+<aside class="ui-sum" aria-label="要点"><p class="ui-sum-h">この記事の要点</p><ul><li>公式の数字ではSD3.5 Mediumは9.9GB、FLUX.2 klein 4Bは約13GB</li><li>新しく買うならVRAM16GBのGPUが選びやすい</li><li>GPUが無いならComfy Cloudの無料枠から</li></ul><p class="ui-sum-who"><b>向いている人: </b>自分のPCで画像生成AIを動かしたい人</p></aside><nav class="toc" aria-label="目次"><p class="toc-h">目次</p><ol><li><a href="#あなたに合うのはどれ">あなたに合うのはどれ?</a></li><li><a href="#ローカルとクラウドは何が違う">ローカルとクラウドは何が違う?</a></li><li><a href="#必要なvramはモデルでどれくらい違う">必要なVRAMはモデルでどれくらい違う?</a></li><li><a href="#gpuの価格の目安-2026年10月">GPUの価格の目安(2026年10月)</a></li><li><a href="#comfyui-desktopを入れる手順-windows">ComfyUI Desktopを入れる手順(Windows)</a></li><li><a href="#次にやること">次にやること</a></li><li><a href="#よくある質問">よくある質問</a></li><li><a href="#出典">出典</a></li></ol></nav><h2 id="あなたに合うのはどれ">あなたに合うのはどれ?</h2>
+<p>今のPCとやりたいことで、最初に選ぶものが決まります。下の表で自分に近い行を探してください。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">あなたに合うのはどれ?</caption><thead><tr><th>状況</th><th>まず選ぶもの</th><th>最初に開くページ</th></tr></thead><tbody><tr><td>今のPCで無料で試したい(NVIDIAのGPUあり)</td><td>ComfyUI Desktop</td><td><a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a></td></tr><tr><td>GPUが無い・ノートPC・まず雰囲気を見たい</td><td>Comfy Cloudの無料枠</td><td><a href="https://comfy.org/pricing/" rel="noopener">Comfy Cloud 料金</a></td></tr><tr><td>M1以降のMac</td><td>ComfyUI(Apple Silicon対応)</td><td><a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a></td></tr><tr><td>これからGPUを買う・予算を抑えたい</td><td>VRAM 16GBのGPU</td><td>この記事の「GPUの価格の目安」</td></tr><tr><td>仕事で毎日使う・大きなFLUXモデルを使いたい</td><td>VRAM 24GB以上のGPUか、クラウドの有料プラン</td><td><a href="https://blogs.nvidia.com/blog/rtx-ai-garage-flux-kontext-nim-tensorrt" rel="noopener">FLUX.1 Kontextの最適化(NVIDIA)</a></td></tr></tbody></table></div>
+<p>理由をひとことずつ書きます。手持ちのGPUで動くかどうかは、無料のComfyUIを入れれば確かめられます。GPUが無いなら、数万円以上の買い物の前にクラウドで「自分は本当に毎日使うか」を見たほうが損をしません。16GBをすすめるのは、後で出てくる公式のVRAM数値の多くが12〜13GB前後だからです。</p>
+<h2 id="ローカルとクラウドは何が違う">ローカルとクラウドは何が違う?</h2>
+<p>ローカルは「最初にGPU代がかかり、あとは電気代だけで回数の制限がない」形です。クラウドは「最初の費用はかからず、使った分か月額を払う」形。違いは次の表のとおりです。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">ローカルとクラウドは何が違う?</caption><thead><tr><th>比べる点</th><th>ローカル(自分のPC)</th><th>クラウド(例: Comfy Cloud)</th></tr></thead><tbody><tr><td>最初の費用</td><td>GPU・PCの購入代</td><td>0円から(無料枠あり)</td></tr><tr><td>毎月の費用</td><td>電気代</td><td>Standardで月$20から(<a href="https://comfy.org/pricing/" rel="noopener">料金</a>・2026年10月時点・最新は公式で確認)</td></tr><tr><td>生成の回数</td><td>制限なし</td><td>クレジットの範囲まで</td></tr><tr><td>使えるモデル</td><td>自分で入れたもの全部</td><td>自作・外部モデルの取り込みはCreator以上(<a href="https://comfy.org/pricing/" rel="noopener">料金</a>)</td></tr><tr><td>データの置き場所</td><td>自分のPCの中</td><td>運営会社のサーバー</td></tr><tr><td>手間</td><td>導入・更新・トラブル対応を自分で</td><td>ほぼ不要</td></tr></tbody></table></div>
+<p>ローカルを選ぶ人がよく挙げる理由は、回数を気にせず何百枚も試せることと、作った画像や下絵が外に出ないことです。</p>
+<p>ただし、モデルを自由に入れられることと、作った画像を自由に使えることは別の話です。たとえばStable Diffusion 3.5は「Stability AI Community License」で、年間の売上が100万ドル未満の個人・組織なら無料で商用利用できます(<a href="https://stability.ai/community-license-agreement" rel="noopener">Stability AI</a>)。モデルごとにライセンスが違うので、副業や仕事で使う前に<a href="/ai-image-commercial-use-terms-check/">画像生成AI商用利用、規約のどこを確認するか</a>で確認する所を見ておくと安心です。</p>
+<h2 id="必要なvramはモデルでどれくらい違う">必要なVRAMはモデルでどれくらい違う?</h2>
+<p>目安は、古いモデルなら8GB、2024年以降の新しいモデルなら12〜16GBです。各社が公開している数字を並べると、次のようになります。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">必要なVRAMはモデルでどれくらい違う?</caption><thead><tr><th>モデル</th><th>公式の数字</th><th>出典</th></tr></thead><tbody><tr><td>Stable Diffusion 1.5 / SDXL(AUTOMATIC1111で使う場合)</td><td>4GBのGPUに対応(2GBで動いた報告もあり)</td><td><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" rel="noopener">AUTOMATIC1111 GitHub</a></td></tr><tr><td>Stable Diffusion 3.5 Medium(25億パラメータ)</td><td>9.9GB(テキストエンコーダーは別)</td><td><a href="https://stability.ai/news-updates/introducing-stable-diffusion-3-5" rel="noopener">Stability AI</a></td></tr><tr><td>FLUX.2 [klein] 4B</td><td>約13GB。RTX 3090 / 4070以上</td><td><a href="https://huggingface.co/black-forest-labs/FLUX.2-klein-4B" rel="noopener">Hugging Face</a></td></tr><tr><td>FLUX.1 Kontext [dev]</td><td>元は24GB → FP8で12GB(RTX 40シリーズ)、FP4で7GB(RTX 50シリーズ)</td><td><a href="https://blogs.nvidia.com/blog/rtx-ai-garage-flux-kontext-nim-tensorrt" rel="noopener">NVIDIA</a></td></tr></tbody></table></div>
+<p>Stability AIは、Mediumについて次のように書いています。</p>
+<blockquote><p>「This model only requires 9.9 GB of VRAM (excluding text encoders) to unlock its full performance」(<a href="https://stability.ai/news-updates/introducing-stable-diffusion-3-5" rel="noopener">Stability AI</a>)</p></blockquote>
+<p>訳すと「このモデルの性能を出し切るのに必要なVRAMは9.9GBだけ(テキストエンコーダーを除く)」です。気をつけたいのは「テキストエンコーダーを除く」の部分。プロンプトを読み取る部品の分は、この数字に入っていません。8GBのGPUでぎりぎり動くかどうかではなく、少し余裕を持たせたほうがいいのはこのためです。</p>
+<p>FLUX.2 [klein] 4BのHugging Faceのページには、次の一文があります。</p>
+<blockquote><p>「The FLUX.2 [klein] 4B model fits in ~13GB VRAM and is accessible on NVIDIA RTX 3090/4070 and above.」(<a href="https://huggingface.co/black-forest-labs/FLUX.2-klein-4B" rel="noopener">Hugging Face</a>)</p></blockquote>
+<p>訳すと「FLUX.2 [klein] 4Bは約13GBのVRAMに収まり、NVIDIA RTX 3090 / 4070以上で使える」。ライセンスはApache 2.0です(<a href="https://huggingface.co/black-forest-labs/FLUX.2-klein-4B" rel="noopener">Hugging Face</a>)。</p>
+<h3 id="vramが少なくても動くことはある">VRAMが少なくても動くことはある</h3>
+<p>ComfyUIのGitHubには、「4GBのVRAMと8GBのRAMでも、いちばん大きいオープンソースのモデルを比較的速く動かせる」とあります(<a href="https://github.com/comfyanonymous/ComfyUI" rel="noopener">ComfyUI GitHub</a>)。足りない分をメインメモリに逃がす仕組みがあるからです。</p>
+<p>ただ、これは「動く」という意味です。待ち時間は長くなります。毎日何十枚も作るなら、VRAMはモデルの公式の数字より多めにしておきましょう。</p>
+<h3 id="対応しているgpuの種類">対応しているGPUの種類</h3>
+<p>ComfyUIの公式の動作環境ページに載っているGPUの種類は8つです(NVIDIA、AMD(Linux)、AMD(Windows)、Intel Arc、Apple Silicon、Ascend NPU、Cambricon MLU、Iluvatar Corex)。GPUが無くても<code>--cpu</code>で動かせます(<a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a>・2026-10-19にこのサイトで数えた)。</p>
+<p>とはいえ、手順の解説や配布されているモデルの多くはNVIDIAのGPUを前提にしています。AMDやIntelは安く買えることもありますが、つまずいたときに解決方法を見つけにくいのが難点です。</p>
+<h2 id="gpuの価格の目安-2026年10月">GPUの価格の目安(2026年10月)</h2>
+<p>VRAM 16GBのNVIDIAのGPUで、いちばん手が届きやすいのはGeForce RTX 5060 Ti 16GBです。ただ、2026年はメモリ不足で値段が上がっています。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">GPUの価格の目安(2026年10月)</caption><thead><tr><th>GPU</th><th>VRAM</th><th>国内の価格</th><th>時点・出典</th></tr></thead><tbody><tr><td>RTX 5060 Ti 16GB</td><td>16GB</td><td>実売8万1,980円前後から</td><td>2025年4月の発売時(<a href="https://pc.watch.impress.co.jp/docs/news/2007553.html" rel="noopener">PC Watch</a>)</td></tr><tr><td>RTX 5060 Ti 16GB</td><td>16GB</td><td>12万9,800円</td><td><time datetime="2026-10-18">2026年10月18日</time>(<a href="https://www.araoji-game.com/entry/pc-parts-price-2026-10" rel="noopener">アラおじ</a>)</td></tr><tr><td>Radeon RX 9060 XT 16GB</td><td>16GB</td><td>8万3,980円</td><td><time datetime="2026-10-18">2026年10月18日</time>(<a href="https://www.araoji-game.com/entry/pc-parts-price-2026-10" rel="noopener">アラおじ</a>)</td></tr><tr><td>Radeon RX 9070 XT 16GB</td><td>16GB</td><td>13万4,700円</td><td><time datetime="2026-10-18">2026年10月18日</time>(<a href="https://www.araoji-game.com/entry/pc-parts-price-2026-10" rel="noopener">アラおじ</a>)</td></tr></tbody></table></div>
+<p>(価格は2026年10月時点・店や日によって変わります。最新は販売店で確認してください)</p>
+<p>同じRTX 5060 Ti 16GBでも、発売時とくらべて4万円以上高くなりました。8GB版はもっと安く売られています。それでも上のVRAMの表を見ると、8GBで余裕を持って動くのは古いモデルまで。あとからGPUを買い直すより、最初に16GBを選んだほうが結果的に安く済むことが多いでしょう。</p>
+<h3 id="クラウドと比べると何か月分">クラウドと比べると何か月分?</h3>
+<p>たとえば、RTX 5060 Ti 16GBの12万9,800円を、Comfy Cloud Standardの月$20と比べてみます。1ドル150円で計算すると月3,000円なので、約43か月分です(為替は仮の数字です)。</p>
+<p>判断の目安は次の2つです。</p>
+<ul><li>3年以上、ほぼ毎日使うつもり → ローカルのほうが割安になりやすい</li><li>週に数回・月に数十枚ほど → クラウドのほうが割安で手間も少ない</li></ul>
+<p>GPUを積んだPCを持っていない人は、GPUのほかに電源やケースの費用もかかることを入れて考えてください。</p>
+<h2 id="comfyui-desktopを入れる手順-windows">ComfyUI Desktopを入れる手順(Windows)</h2>
+<p>Windowsで一番手間が少ないのは、ComfyUI Desktop(公式のインストーラー版)です。公式の動作環境は、Windows 10以降で、空き容量は1回のインストールにつき4.85GB以上がおすすめとされています(<a href="https://docs.comfy.org/installation/desktop/windows" rel="noopener">Comfy Desktop for Windows</a>)。モデルのファイルは別に何GBもあるので、SSDを数十GB空けておきましょう。</p>
+<ol><li>公式サイト(comfy.org)からWindows用のインストーラー(.exe)をダウンロードして実行し、表示に沿って進めます。</li><li>スタートメニューかデスクトップのショートカットから「Comfy Desktop」を起動します。</li><li>「How do you want to run Comfy?」と出たら、「Local」を選びます(「Cloud」はComfy CloudのGPUで動かす方です)。</li><li>「I agree to the EULA and Terms of Service」にチェックを入れます。ここだけは必須です。利用データの送信とベータ機能のチェックは、入れなくても進めます。</li><li>迷ったら「Express Install with recommended settings」にチェックを入れます。おすすめの設定で入ります。</li><li>「Continue」を押します。「Preparing your install…」と出たら、終わるまで待ちましょう。</li></ol>
+<p>初回起動の画面の流れは<a href="https://docs.comfy.org/installation/desktop/overview" rel="noopener">Comfy Desktop 概要</a>にまとまっています。入ったら、最初はテンプレートのワークフローで1枚作ってみてください。プロンプトの組み立て方は<a href="/image-ai-prompt-kakikata-jun/">画像生成AIプロンプトの書き方、順番で決まる</a>で順番に書いています。</p>
+<h3 id="つまずきやすい所と直し方">つまずきやすい所と直し方</h3>
+<p><strong>どちらのカードも選ばれていない</strong>:GPUの性能が足りないと判断されると、「Local」と「Cloud」のどちらも最初から選ばれていない状態になります。画面に出ている認識されたハードウェアを見て、GPUの名前が正しいか確かめましょう。「Cloud」に「Recommended for your hardware」と出ていたら、そのPCではクラウドのほうが向いている、という意味です(<a href="https://docs.comfy.org/installation/desktop/overview" rel="noopener">Comfy Desktop 概要</a>)。</p>
+<p><strong>起動しない・途中で止まる</strong>:ログの<code>%APPDATA%\Comfy Desktop\logs</code>の中の<code>app.log</code>を開いて、最後のほうのエラーの文をそのまま検索します(<a href="https://docs.comfy.org/installation/desktop/windows" rel="noopener">Comfy Desktop for Windows</a>)。</p>
+<p><strong>入れたモデルがどこにあるか分からない</strong>:モデルは<code>%LOCALAPPDATA%\Comfy-Desktop\ComfyUI-Shared</code>(古い版では<code>%USERPROFILE%\ComfyUI-Shared</code>)にまとめて置かれます(<a href="https://docs.comfy.org/installation/desktop/windows" rel="noopener">Comfy Desktop for Windows</a>)。</p>
+<p><strong>AUTOMATIC1111でPythonのエラーが出る</strong>:AUTOMATIC1111はPython 3.10.6を指定していて、「新しいバージョンのPythonはtorchに対応していない」と書かれています(<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" rel="noopener">AUTOMATIC1111 GitHub</a>)。ComfyUIを手作業で入れる場合は、反対にPython 3.13がおすすめです(<a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a>)。ツールによって合うPythonが違う、と覚えておけば、エラーの原因に早く気づけます。</p>
+<p><strong>画面の表示が崩れる</strong>:ComfyUIはGoogle Chromeの143以降をすすめています(<a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a>)。</p>
+<h2 id="次にやること">次にやること</h2>
+<h3 id="自分でやる人の今日の一歩">自分でやる人の今日の一歩</h3>
+<ol><li>自分のPCのGPUの名前とVRAMを確かめます。Windowsなら、タスクマネージャーの「パフォーマンス」タブの「GPU」で見られます。</li><li>VRAMが8GB以上あれば、上の手順でComfy Desktopを入れて、テンプレートで1枚作ってみましょう。</li></ol>
+<h3 id="自分でやるのが大変-早く確実にしたい人">自分でやるのが大変・早く確実にしたい人</h3>
+<p>公式のクラウド版、Comfy Cloudがあります。料金ページに載っている有料プランは4つ(Standard・Creator・Pro・Team)で、ほかに無料枠もあります(<a href="https://comfy.org/pricing/" rel="noopener">Comfy Cloud 料金</a>・2026-10-19にこのサイトで数えた)。どのプランもRTX 6000 Pro(96GB)を使います。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">自分でやるのが大変・早く確実にしたい人</caption><thead><tr><th>プラン</th><th>月額(月払い)</th><th>向いている人</th></tr></thead><tbody><tr><td>無料枠</td><td>0円(本物のGPUで5回)</td><td>買う前に1回見てみたい人</td></tr><tr><td>Standard</td><td>$20</td><td>用意されたモデルで十分な人</td></tr><tr><td>Creator</td><td>$35</td><td>CivitAIやHugging Faceのモデル・LoRAを使いたい人</td></tr><tr><td>Pro</td><td>$100</td><td>1回の処理が30分を超える人</td></tr></tbody></table></div>
+<p>(2026年10月時点・最新は公式で確認)</p>
+<p>向いているのは、GPUを持っていない人や、導入やエラーの対応に時間をかけたくない人です。反対に、毎日たくさん作る人や、作った画像や下絵を外に出したくない人には向きません。注意点として、Standardでは自分のモデルを取り込めません。1回の処理も30分までです(<a href="https://comfy.org/pricing/" rel="noopener">Comfy Cloud 料金</a>)。</p>
+<h3 id="このサイトの関連記事">このサイトの関連記事</h3>
+<ul><li><a href="/ai-image-commercial-use-free-plan-compar/">画像生成AI商用利用おすすめ、無料枠で比べる</a>:ローカルを入れる前に、無料のサービスで足りるかを比べたい人に</li><li><a href="/image-ai-prompt-hairstyle/">画像生成AIプロンプト、髪型を指定する書き方</a>:イラストの細かい指定をしたい人に</li></ul>
+<h2 id="よくある質問">よくある質問</h2>
+<h3 id="gpuが無いノートpcでも画像生成aiをローカルで動かせますか">GPUが無いノートPCでも画像生成AIをローカルで動かせますか?</h3>
+<p>動かせます。ComfyUIは<code>--cpu</code>で、GPUが無くても動きます(<a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a>)。ただ1枚に時間がかかるので、普段使うならクラウドの無料枠から試すほうが現実的です。</p>
+<h3 id="vram-8gbのgpuではもう足りませんか">VRAM 8GBのGPUではもう足りませんか?</h3>
+<p>SD1.5やSDXLなら、8GBでも十分に使えます。SD3.5 Mediumは公式で9.9GB(テキストエンコーダーを除く)なので、8GBでは設定の工夫が必要です(<a href="https://stability.ai/news-updates/introducing-stable-diffusion-3-5" rel="noopener">Stability AI</a>)。新しいモデルを中心に使うなら、16GBが目安です。</p>
+<h3 id="macでもローカルで動きますか">Macでもローカルで動きますか?</h3>
+<p>M1以降のApple Silicon Macなら、ComfyUIが公式に対応しています(<a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">ComfyUI 動作環境</a>)。ただ、解説記事や配布されているモデルはNVIDIAのGPU向けが多く、設定を自分で調べる場面が増えます。</p>
+<h3 id="ローカルで作った画像は商用利用できますか">ローカルで作った画像は商用利用できますか?</h3>
+<p>使ったモデルのライセンスで決まります。Stable Diffusion 3.5は年間売上100万ドル未満なら無料で商用利用でき(<a href="https://stability.ai/community-license-agreement" rel="noopener">Stability AI</a>)、FLUX.2 [klein] 4BはApache 2.0です(<a href="https://huggingface.co/black-forest-labs/FLUX.2-klein-4B" rel="noopener">Hugging Face</a>)。確認のしかたは<a href="/ai-image-commercial-use-terms-check/">規約のどこを確認するか</a>にまとめています。</p>
+<h2 id="出典">出典</h2>
+<ul><li><a href="https://docs.comfy.org/installation/system_requirements" rel="noopener">System Requirements - ComfyUI</a></li><li><a href="https://docs.comfy.org/installation/desktop/windows" rel="noopener">Comfy Desktop for Windows - ComfyUI</a></li><li><a href="https://docs.comfy.org/installation/desktop/overview" rel="noopener">Comfy Desktop Overview - ComfyUI</a></li><li><a href="https://github.com/comfyanonymous/ComfyUI" rel="noopener">ComfyUI GitHub</a></li><li><a href="https://comfy.org/pricing/" rel="noopener">Pricing - Comfy Cloud</a></li><li><a href="https://stability.ai/news-updates/introducing-stable-diffusion-3-5" rel="noopener">Introducing Stable Diffusion 3.5 - Stability AI</a></li><li><a href="https://stability.ai/community-license-agreement" rel="noopener">Stability AI Community License</a></li><li><a href="https://huggingface.co/black-forest-labs/FLUX.2-klein-4B" rel="noopener">FLUX.2-klein-4B - Hugging Face</a></li><li><a href="https://blogs.nvidia.com/blog/rtx-ai-garage-flux-kontext-nim-tensorrt" rel="noopener">NVIDIA RTX AI Accelerates FLUX.1 Kontext - NVIDIA Blog</a></li><li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" rel="noopener">AUTOMATIC1111 stable-diffusion-webui - GitHub</a></li><li><a href="https://pc.watch.impress.co.jp/docs/news/2007553.html" rel="noopener">GeForce RTX 5060 Ti搭載カードが各社より発売 - PC Watch</a></li><li><a href="https://www.araoji-game.com/entry/pc-parts-price-2026-10" rel="noopener">2026年10月のGPU・PCパーツ価格 - アラおじのゲーム・ガジェット備忘録</a></li></ul><aside class="credit" aria-label="この記事の作り方"><p><strong>この記事の作り方</strong>: 各サービスの公式ページ・ヘルプなどの公開情報を、AI の助けを借りて調べてまとめ、出典・誇張・PR 表示の自動の点検を通してから公開しています。体験談や試した結果は書いていません(<a href="/about/">編集方針</a>)。</p><p>公式の情報で確かめた日: <time datetime="2026-10-19">2026年10月19日</time></p></aside><p class="note">内容の誤りや古くなった情報に気づいたら、<a href="mailto:shigoto.ai.note@gmail.com">shigoto.ai.note@gmail.com</a> までお知らせください。記事は順番に公式の情報で確かめ直しています。</p></article><section class="related"><h2>関連記事</h2><ul class="list"><li><p class="d"><time datetime="2026-10-15">2026年10月15日</time> · 24分で読めます</p><h3><a href="/ai-image-commercial-use-terms-check/">画像生成AI商用利用、規約のどこを確認するか</a></h3><p>画像生成AIを商用で使う前に規約で見るべき4つの場所（権利、プラン・売上条件、禁止事項、公開範囲・例外）と探し方を、主要6サービスの公式ページをもとに解説します（2026年10月時点）。</p></li><li><p class="d"><time datetime="2026-10-15">2026年10月15日</time> · 19分で読めます</p><h3><a href="/image-ai-prompt-kakikata-jun/">画像生成AIプロンプトの書き方、順番で決まる</a></h3><p>画像生成AIのプロンプトの書き方を、主語→構図→画風の「順番」でまとめました。ChatGPT・Gemini・Firefly・Midjourneyの公式ガイドをもとに、型、つまずいたときの直し方、料金まで紹介します。</p></li><li><p class="d"><time datetime="2026-10-16">2026年10月16日</time> · 17分で読めます</p><h3><a href="/ai-image-commercial-use-free-plan-compar/">画像生成AI商用利用おすすめ、無料枠で比べる</a></h3><p>画像生成ai 商用利用 おすすめを、無料枠だけで商用利用できるかで比較しました。Adobe Firefly・Canva・Ideogram・ChatGPTの無料枠と注意点、状況別の選び方、使い始める手順をまとめています。</p></li></ul></section></main><footer><p><strong>画像生成AI比較</strong> — 画像生成AIの比較と使い方(無料枠、商用利用の規約、プロンプトの書き方)を公式情報で解説</p>
+<p><a href="/">記事一覧</a> · <a href="/about/">このサイトについて・編集方針</a> · <a href="/privacy/">プライバシーポリシー</a> · <a href="/feed.xml">RSS</a></p><p class="sisters">姉妹サイト: <a href="https://shigoto.aobaworks.com/">AIツール比較</a> · <a href="https://aobaworks.com/douga-henshu-note/">動画編集ソフト比較</a> · <a href="https://aobaworks.com/hojokin/">補助金・助成金検索</a> · <a href="https://aobaworks.com/nyusatsu/">入札情報検索</a></p><p>© 2026 画像生成AI比較</p></footer><script src="/ui.js" defer></script></body></html>
