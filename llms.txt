@@ -5,6 +5,7 @@
 記事は各サービスの公式情報を調べてまとめ、出典を示し、定期的に見直しています。
 
 ## 記事
+- [Midjourney商用利用プラン|4プランの年商条件を表で](https://gazou.aobaworks.com/midjourney-commercial-plan/): midjourney 商用利用 プランの答えです。Basic・Standard・Pro・Megaのどの有料プランでも商用利用はできます。年商100万ドルを超える会社はPro以上が必要です。料金・Stealth・著作権を公式情報の表と手順で整理しました。
 - [画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ](https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/): 画像生成AIをローカルで動かすには、まずGPUのVRAM容量を確認します。8GB・12GB・16GB・24GB以上で動くモデルの違い、2026年10月時点のGPU価格の目安、ComfyUI Desktopの導入手順を公式ドキュメントをもとにまとめました。
 - [画像生成AIプロンプト、髪型を指定する書き方](https://gazou.aobaworks.com/image-ai-prompt-hairstyle/): 画像生成AIのプロンプトで髪型を指定するときの書き方を、髪色・長さ・前髪・結び方の部位ごとの指定語と、色移り・前髪崩れなど崩れやすい箇所の直し方までまとめて解説します。
 - [画像生成AI商用利用おすすめ、無料枠で比べる](https://gazou.aobaworks.com/ai-image-commercial-use-free-plan-compar/): 画像生成ai 商用利用 おすすめを、無料枠だけで商用利用できるかで比較しました。Adobe Firefly・Canva・Ideogram・ChatGPTの無料枠と注意点、状況別の選び方、使い始める手順をまとめています。
