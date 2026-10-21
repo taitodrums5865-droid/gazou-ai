@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき</title><meta name="description" content="画像生成ai 同じキャラを出したい人向けに、MidjourneyのEditモデルと旧cref、Stable DiffusionのSeedとLoRA、Geminiの画像参照の使い分けを手順と比較表でまとめました(2026年10月時点)。"><link rel="canonical" href="https://gazou.aobaworks.com/image-ai-same-character-fix/">
+<meta property="og:type" content="article"><meta property="og:title" content="画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき"><meta property="og:description" content="画像生成ai 同じキャラを出したい人向けに、MidjourneyのEditモデルと旧cref、Stable DiffusionのSeedとLoRA、Geminiの画像参照の使い分けを手順と比較表でまとめました(2026年10月時点)。">
+<meta property="og:url" content="https://gazou.aobaworks.com/image-ai-same-character-fix/"><meta property="og:site_name" content="画像生成AI比較"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://gazou.aobaworks.com/og/image-ai-same-character-fix.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta property="article:published_time" content="2026-10-22">
+<meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#151719" media="(prefers-color-scheme: dark)"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='3' y='3' width='58' height='58' rx='8' fill='%23fbfaf6' stroke='%231d2329' stroke-width='5'/%3E%3Ctext x='32' y='45' font-size='36' font-weight='700' text-anchor='middle' fill='%231d2329' font-family='sans-serif'%3E画%3C/text%3E%3C/svg%3E">
+<link rel="alternate" type="application/rss+xml" title="画像生成AI比較" href="/feed.xml"><style>:root{--ink:#1d2329;--sub:#5a6470;--line:#e2dfd6;--bg:#fbfaf6;--card:#fff;--accent:#1f6f5c;--code:#f1efe8;--mark:#7a5c1e;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--ink:#e6e5df;--sub:#a5abb1;--line:#363a3e;--bg:#151719;--card:#1c1f22;--accent:#72c6ac;--code:#24282b;--mark:#d8b56c}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.9 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;overflow-wrap:break-word;line-break:strict}
+a{color:var(--accent);text-underline-offset:.18em}a:hover{text-decoration-thickness:2px}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header,main,footer{max-width:740px;margin:0 auto;padding:0 20px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 18px;padding-top:18px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.brand{font-weight:800;font-size:1.1875rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+.gnav{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:0.875rem}.gnav a{color:var(--sub);text-decoration:none}.gnav a:hover{color:var(--accent)}
+.tag{color:var(--sub);font-size:0.875rem;margin:0;flex-basis:100%;line-height:1.6}
+h1{font-size:clamp(25px,5.6vw,33px);line-height:1.4;margin:22px 0 10px;letter-spacing:.01em}
+h2{font-size:clamp(21px,4.4vw,24px);line-height:1.45;margin:44px 0 12px;padding-top:14px;border-top:2px solid var(--ink)}
+h3{font-size:1.1875rem;line-height:1.5;margin:30px 0 8px;padding-left:10px;border-left:4px solid var(--mark)}h4{font-size:1.0625rem;margin:22px 0 6px}
+p{margin:0 0 1.05em}li{margin:.25em 0}ul,ol{padding-left:1.4em}strong{font-weight:700}
+.crumbs{font-size:0.8438rem;color:var(--sub);margin:16px 0 0;line-height:1.6}.crumbs a{color:var(--sub)}.crumbs span{margin:0 6px}
+.meta{color:var(--sub);font-size:0.875rem;margin:4px 0 10px}.meta time{font-variant-numeric:tabular-nums}
+.hero{display:block;width:100%;height:auto;aspect-ratio:1200/630;border:1px solid var(--line);border-radius:6px;margin:10px 0 6px}
+.tags{margin:8px 0 14px;line-height:2}.tags a{display:inline-block;font-size:0.8125rem;line-height:1.7;padding:0 10px;margin:0 6px 4px 0;border:1px solid var(--line);border-radius:999px;color:var(--sub);text-decoration:none;background:var(--card)}
+.tags a:hover{border-color:var(--accent);color:var(--accent)}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 20px 10px;margin:20px 0 28px}.toc p{margin:0 0 4px;font-size:0.9375rem}
+.toc ol{margin:0;padding-left:1.4em;font-size:0.9375rem;line-height:1.7}.toc a{color:var(--ink);text-decoration:none}.toc a:hover{color:var(--accent);text-decoration:underline}
+.note{font-size:0.875rem;color:var(--sub);background:var(--code);border-radius:6px;padding:8px 12px}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.88em}
+pre{background:var(--code);border:1px solid var(--line);padding:14px 16px;border-radius:6px;overflow:auto;font-size:0.875rem;line-height:1.6}pre code{background:none;padding:0;font-size:inherit}
+blockquote{margin:18px 0;padding:6px 16px;border-left:3px solid var(--accent);color:var(--sub);background:var(--card)}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:0.9375rem;line-height:1.65}.tbl table{margin:0}main>table{display:block;overflow-x:auto;margin:18px 0}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;min-width:6.5em}th{background:var(--code);font-weight:700}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}tbody tr:nth-child(even) td{background:rgba(127,127,127,.05)}
+.tbl th:first-child,.tbl td:first-child,main>table th:first-child,main>table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);box-shadow:inset -1px 0 0 var(--line)}.tbl thead th:first-child,main>table thead th:first-child{z-index:2;background:var(--s2,var(--code))}
+img{max-width:100%;height:auto;border-radius:4px}
+.list{list-style:none;padding:0;margin:8px 0}.list li{padding:16px 0;border-bottom:1px solid var(--line);margin:0}
+.list a{font-size:1.1875rem;font-weight:700;line-height:1.5;text-decoration:none;color:var(--ink)}.list a:hover{color:var(--accent);text-decoration:underline}
+.list p{margin:6px 0 0;color:var(--sub);font-size:0.9375rem;line-height:1.75}.list .d{font-size:0.8125rem;color:var(--sub);margin:0 0 2px}
+.lead{color:var(--sub);font-size:1rem}.hubs{margin:10px 0 24px}
+.related{margin-top:44px;padding-top:6px;border-top:1px solid var(--line)}.related h2{margin-top:26px}
+.list h2,.list h3{margin:2px 0 6px;font-size:1.1875rem;line-height:1.5}.list h2 a,.list h3 a{color:var(--ink);text-decoration:none}
+.toc-h{font-weight:700;margin:0 0 6px}
+.brand-sub{font-weight:400;font-size:0.875rem;color:var(--sub);margin-left:10px}
+.site-foot p,body>footer p{margin:0 0 6px}
+.credit{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-size:0.8438rem;color:var(--sub)}
+footer{color:var(--sub);font-size:0.8438rem;padding:28px 20px 40px;margin-top:56px;border-top:2px solid var(--ink);line-height:2}footer a{color:var(--sub)}
+td:first-child{min-width:8.5em}
+@media (max-width:600px){body{font-size:1.0312rem;line-height:1.85}header{padding-top:14px;padding-bottom:10px}header .tag{display:none}.list a{font-size:1.0938rem}th,td{padding:8px 10px;font-size:0.9062rem}}/* ui.py(共通の動く部品) */
+/* デザインの決まり v2(2026-10-17 design-harness/docs/デザインシステムの研究.md: 押す場所44px・見えるフォーカス枠) */
+button,.btn,.ui-menu-btn,.ui-fab button,.ui-fab a,.ui-tablist button{min-height:44px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pills a,.tags a{min-height:32px;display:inline-flex;align-items:center}
+body > header{position:relative;padding-right:120px}body > header .ui-menu-btn{position:absolute;right:16px;top:14px}
+@media (max-width:700px){.site-nav,body > header .gnav{display:none}body > header{padding-right:100px}}
+.ui-bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--accent);z-index:30}
+.ui-menu-btn{margin-left:auto;align-self:center;font:inherit;font-size:.9375rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.ui-menu-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ui-scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.ui-drawer{position:fixed;top:0;right:0;bottom:0;width:min(360px,88vw);background:var(--card);border-left:1px solid var(--line);
+  transform:translateX(100%);transition:transform .22s ease;z-index:41;overflow-y:auto;padding:18px 20px 40px}
+.ui-open .ui-scrim{opacity:1;pointer-events:auto}.ui-open .ui-drawer{transform:none}
+.ui-drawer h2{font-size:.8125rem;letter-spacing:.02em;color:var(--sub);margin:22px 0 8px;font-weight:700}
+.ui-drawer .ui-x{float:right;font:inherit;font-size:.875rem;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;color:var(--sub)}
+.ui-drawer ul,.ui-drawer ol{list-style:none;padding:0;margin:0}.ui-drawer li{margin:0;border-bottom:1px solid var(--line)}
+.ui-drawer li a{display:block;padding:10px 4px;text-decoration:none;color:var(--ink);font-size:.96875rem;line-height:1.45}
+.ui-drawer li a:hover,.ui-drawer li a.on{color:var(--accent)}.ui-drawer li a.on{font-weight:700;border-left:3px solid var(--accent);padding-left:9px}
+.ui-fab{position:fixed;right:16px;bottom:18px;z-index:25;display:flex;gap:8px}
+.ui-fab button,.ui-fab a{font:inherit;font-size:.90625rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:9px 16px;cursor:pointer;text-decoration:none}
+.ui-fab .ui-next{background:var(--accent);border-color:var(--accent);color:var(--card);display:none}.ui-fab .ui-next.show{display:inline-block}
+.ui-fab .ui-top{display:none}.ui-fab .ui-top.show{display:inline-block}
+.ui-tabs{margin:8px 0 26px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.ui-tablist{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.ui-tablist button{flex:none;font:inherit;font-size:.9375rem;background:none;border:0;border-bottom:3px solid transparent;color:var(--sub);padding:12px 16px;cursor:pointer;white-space:nowrap}
+.ui-tablist button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent);font-weight:700}
+.ui-panel{padding:6px 18px 4px}.ui-panel[hidden]{display:none}.ui-panel>h3:first-child{margin-top:12px}
+.ui-faq details{border-bottom:1px solid var(--line)}.ui-faq details:first-of-type{border-top:1px solid var(--line)}
+.ui-faq summary{cursor:pointer;list-style:none;padding:14px 30px 14px 2px;font-weight:700;position:relative;line-height:1.45}
+.ui-faq summary::-webkit-details-marker{display:none}
+.ui-faq summary::after{content:"+";position:absolute;right:6px;top:12px;font-weight:400;font-size:1.25rem;color:var(--sub)}
+.ui-faq details[open] summary::after{content:"−"}.ui-faq .ui-a{padding:0 2px 8px}
+.ui-sum{border:2px solid var(--ink);border-radius:10px;background:var(--card);padding:14px 18px 10px;margin:4px 0 26px}
+.ui-sum-h{font-weight:800;font-size:.9375rem;margin:0 0 6px}.ui-sum ul{margin:0 0 8px;padding-left:20px}.ui-sum li{margin:4px 0;font-size:1.03125rem;line-height:1.55}
+.ui-sum-who{font-size:.9375rem;color:var(--sub);margin:0 0 4px;border-top:1px solid var(--line);padding-top:8px}
+.table-wrap{max-height:80vh;overflow:auto}.table-wrap thead th{position:sticky;top:0;z-index:1}
+.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--card);z-index:1}.table-wrap thead th:first-child{z-index:2;background:var(--pre,var(--card))}
+.ui-kicker{margin:28px 0 4px;font-weight:700;color:var(--accent);font-size:.9375rem}.ui-hero{font-size:2.125rem;line-height:1.35;margin:0 0 22px;max-width:22em;text-wrap:balance;word-break:auto-phrase}
+@media (max-width:600px){.ui-hero{font-size:1.625rem}}
+.ui-cards{display:grid;grid-template-columns:1fr;gap:18px;list-style:none;padding:0}
+.ui-cards>li{display:grid;grid-template-columns:200px 1fr;gap:4px 18px;align-items:start;border:1px solid var(--line)!important;border-radius:12px;background:var(--card);padding:14px!important;margin:0}
+.ui-cards>li>*{grid-column:2}.ui-cards .ui-thumb-a{grid-column:1;grid-row:1 / span 4}
+.ui-cards .ui-thumb{display:block;width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.ui-cards>li.ui-noimg{grid-template-columns:1fr}.ui-cards>li.ui-noimg>*{grid-column:1}
+.ui-cards>li:hover{border-color:var(--accent)!important}
+@media (max-width:600px){.ui-cards>li{grid-template-columns:1fr}.ui-cards>li>*,.ui-cards .ui-thumb-a{grid-column:1}.ui-cards .ui-thumb-a{grid-row:auto}}
+.ui-side{display:none}
+@media (min-width:1240px){.ui-side{display:block;position:fixed;top:96px;left:calc(50% + 400px);width:260px;max-height:calc(100vh - 140px);overflow-y:auto;font-size:.875rem;border-left:1px solid var(--line);padding-left:14px}
+.ui-side p{font-weight:700;color:var(--sub);margin:0 0 6px;font-size:.8125rem}.ui-side ol{list-style:none;padding:0;margin:0}.ui-side li{margin:0}
+.ui-side a{display:block;padding:5px 0;color:var(--sub);text-decoration:none;line-height:1.4}.ui-side a:hover,.ui-side a.on{color:var(--accent)}.ui-side a.on{font-weight:700}
+.ui-fab button{display:none}}
+@media (prefers-reduced-motion:reduce){.ui-drawer,.ui-scrim{transition:none}html{scroll-behavior:auto}}
+@media print{.ui-bar,.ui-fab,.ui-drawer,.ui-scrim,.ui-menu-btn{display:none}}
+:root{--font-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",Meiryo,system-ui,sans-serif;--font-head:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",Meiryo,system-ui,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Noto Sans Mono",monospace;--mark-ch:"画";--mark-fs:1rem;--fs-body:1.0625rem;--lh-body:1.85;--ls-body:.02em;--ls-head:.02em;--measure:40em;--page:1120px;--col:44rem;--danger-bg:#faf3e8;--danger-tx:#6e4a12;--danger-bd:#c8a46e;--warn-bg:#faf3e8;--warn-tx:#6e4a12;--warn-bd:#c8a46e;--ok-bg:#f5f6f8;--ok-tx:#1b1f24;--code-bg:var(--s2);--code-ink:var(--ink);--code-sub:var(--sub);--code-line:var(--line);--bg:#ffffff;--card:#ffffff;--surface:#ffffff;--s2:#f5f6f8;--pre:#f5f6f8;--ink:#1b1f24;--sub:#4f5964;--line:#e3e6ea;--border:#8a939d;--accent:#56483f;--link:#56483f;--on-accent:#ffffff;--due-bg:#faf3e8;--due-tx:#6e4a12;--focus:#56483f;--head-bg:#ffffff;--head-ink:#1b1f24;--head-sub:#4f5964;--hover:#f6f7f9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14151a;--card:#1b1d23;--surface:#1b1d23;--s2:#202229;--pre:#202229;--ink:#e6e9ec;--sub:#a9b2bc;--line:#2f363e;--border:#6b7681;--accent:#cdbbaf;--link:#cdbbaf;--on-accent:#111418;--due-bg:#2e2617;--due-tx:#e8cfa3;--focus:#cdbbaf;--head-bg:#14151a;--head-ink:#e6e9ec;--head-sub:#a9b2bc;--hover:#1f252c;--danger-bg:#2e2617;--danger-tx:#e8cfa3;--danger-bd:#a88552;--warn-bg:#2e2617;--warn-tx:#e8cfa3;--warn-bd:#a88552;--ok-bg:#1d2228;--ok-tx:#e6e9ec;}}
+:root[data-theme=dark]{--bg:#14151a;--card:#1b1d23;--surface:#1b1d23;--s2:#202229;--pre:#202229;--ink:#e6e9ec;--sub:#a9b2bc;--line:#2f363e;--border:#6b7681;--accent:#cdbbaf;--link:#cdbbaf;--on-accent:#111418;--due-bg:#2e2617;--due-tx:#e8cfa3;--focus:#cdbbaf;--head-bg:#14151a;--head-ink:#e6e9ec;--head-sub:#a9b2bc;--hover:#1f252c;--danger-bg:#2e2617;--danger-tx:#e8cfa3;--danger-bd:#a88552;--warn-bg:#2e2617;--warn-tx:#e8cfa3;--warn-bd:#a88552;--ok-bg:#1d2228;--ok-tx:#e6e9ec;}
+
+/* ===== 見た目 v3(ui.py theme_css)。古い CSS のあとに読み込み、上書きする ===== */
+html{scroll-padding-top:16px}
+body{font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);letter-spacing:var(--ls-body);background:var(--bg);color:var(--ink);
+  font-kerning:normal;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+html[lang=ja] body{line-break:strict;overflow-wrap:anywhere;text-autospace:ideograph-alpha;text-spacing-trim:normal}
+h1,h2,h3,h4{font-family:var(--font-head);letter-spacing:var(--ls-head);color:var(--ink);text-wrap:balance}
+html[lang=ja] h1,html[lang=ja] h2,html[lang=ja] h3{font-feature-settings:"palt";word-break:auto-phrase}
+h1,.ui-hero{font-size:clamp(1.75rem,1.35rem + 1.7vw,2.5rem);line-height:1.25;font-weight:750;margin:.5rem 0 1rem}
+html[lang=ja] h1,html[lang=ja] .ui-hero{line-height:1.45;font-weight:700}
+h2{font-size:clamp(1.375rem,1.2rem + .7vw,1.75rem);line-height:1.3;font-weight:700;margin:3rem 0 .75rem;padding-top:0;border-top:0}
+html[lang=ja] h2{line-height:1.5}
+h3{font-size:clamp(1.125rem,1.06rem + .3vw,1.25rem);line-height:1.4;font-weight:700;margin:2rem 0 .5rem;padding-left:0;border-left:0}
+h4{font-size:1.0625rem;margin:1.5rem 0 .4rem}
+p,ul,ol{margin:0 0 1.1em}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:2px}
+strong{font-weight:700}
+html[lang=ja] em,html[lang=ja] i{font-style:normal;font-weight:700}
+.lede,.lead{font-size:1.1875rem;line-height:1.6;color:var(--sub);max-width:var(--measure)}
+html[lang=ja] .lede,html[lang=ja] .lead{font-size:1.0625rem;line-height:1.85}
+.meta,.crumbs{font-size:.875rem;color:var(--sub)}
+.crumbs{margin:1.25rem 0 0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;text-overflow:ellipsis}.crumbs a{color:var(--sub)}
+.ui-kicker{display:none}
+main>h1:first-of-type,.ui-hero{margin-top:2.5rem}main>.crumbs+h1{margin-top:.75rem}
+
+/* ヘッダー: 全幅の帯・中は --page の幅。データのサイトは濃い帯(信頼・公的データの読み物の型: USWDS/GOV.UK の考え方。色は自分のもの) */
+body>header,body>header.site-head{max-width:none;margin:0;background:var(--head-bg);color:var(--head-ink);border-bottom:1px solid var(--line);padding:0}
+body>header:not(.site-head){display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;padding:12px max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px))}
+.site-head .wrap{max-width:var(--page);display:flex;align-items:center;gap:8px 20px;flex-wrap:nowrap;padding-top:12px;padding-bottom:12px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--head-ink);text-decoration:none;font-family:var(--font-head);font-weight:750;font-size:1.25rem;letter-spacing:-.01em;line-height:1.2;min-height:44px}
+html[lang=ja] .brand{letter-spacing:.04em;font-weight:700}
+.brand svg{display:none}
+.brand::before{content:var(--mark-ch);flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:6px;background:var(--accent);color:var(--on-accent);
+  font:700 var(--mark-fs)/1 var(--font-body);letter-spacing:0}
+.brand-sub{font-family:var(--font-body);font-weight:400;font-size:.875rem;color:var(--head-sub);letter-spacing:0;margin-left:4px}
+.site-nav,.gnav{display:flex;gap:4px;margin-left:auto;font-size:.9375rem}
+.site-nav a,.gnav a{color:var(--head-sub);text-decoration:none;padding:10px 12px;margin:0;border-radius:6px;min-height:44px;display:inline-flex;align-items:center}
+.site-nav a:hover,.gnav a:hover{color:var(--head-ink);background:rgba(127,127,127,.14)}
+body>header .tag{order:5;flex-basis:100%;font-size:.875rem;color:var(--head-sub);margin:-4px 0 0;line-height:1.5}
+body>header .ui-menu-btn{position:static;order:4;margin-left:8px;background:transparent;color:var(--head-ink);border:1px solid var(--border);border-radius:6px;font-size:.9375rem;padding:8px 14px}
+body>header:not(.site-head){padding-right:max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px))}
+.site-head{padding-right:0}
+@media (max-width:700px){body>header .ui-menu-btn{margin-left:auto}.brand-sub{display:none}body>header .site-nav,body>header .gnav{display:none}}
+.brand{white-space:nowrap}
+
+/* 本文の列。データのサイトは広い面(表)+読む文は --measure まで(GOV.UK の 2/3 の列の考え方) */
+main{padding-bottom:3rem}
+.disclaimer{margin:20px 0 0;padding:10px 16px;border:0;border-left:4px solid var(--border);background:var(--s2);color:var(--sub);font-size:.875rem;line-height:1.55;border-radius:0 6px 6px 0;max-width:var(--measure)}
+.intro{padding:2.5rem 0 .5rem}
+blockquote{border-left:4px solid var(--border);background:transparent;color:var(--ink);padding:.25rem 0 .25rem 1rem;border-radius:0;margin:1.5rem 0}
+
+/* ボタン・チップ(押す場所 44px: Apple HIG / Material 3 は 48dp) */
+.ui-cta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:1.5rem 0}
+.ui-btn{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border:1px solid var(--border);border-radius:6px;background:var(--card);
+  color:var(--ink);font-weight:600;text-decoration:none;line-height:1.25}
+.ui-btn:hover{border-color:var(--ink);text-decoration:none}
+.ui-btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ui-btn-primary:hover{filter:brightness(1.08);border-color:var(--accent);color:var(--on-accent)}
+.ui-cta-note{color:var(--sub);font-size:.875rem}
+.ui-group{margin:1.25rem 0}
+.ui-group-h{font-weight:700;font-size:.9375rem;margin:0 0 .5rem;color:var(--ink)}
+.ui-chips{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.ui-chips li{margin:0}
+.ui-chips a{display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);text-decoration:none;font-size:.9375rem;line-height:1.3}
+.ui-chips a:hover{border-color:var(--accent);color:var(--accent)}
+@media (pointer:coarse){.ui-chips a{min-height:44px}}
+.pills a,.tags a{border-radius:6px;border-color:var(--line);color:var(--ink);background:var(--card);font-size:.875rem;padding:4px 12px}
+.pills a:hover,.tags a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ホームの「いまの数字」と期限が近い表(USWDS の summary box と collection の考え方) */
+.ui-dash{margin:2rem 0 1rem}
+.ui-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;border:1px solid var(--line);border-radius:8px;background:var(--line);margin:0 0 .5rem;overflow:hidden}
+.ui-stats>div{padding:14px 18px;background:var(--card)}
+.ui-stats b{display:block;font-size:1.75rem;line-height:1.2;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.01em;color:var(--ink)}
+.ui-stats span{display:block;font-size:.875rem;color:var(--sub);line-height:1.45;margin-top:2px}
+.ui-src{font-size:.8125rem;color:var(--sub);margin:0 0 1.5rem}
+.ui-dash-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 .75rem}
+.ui-dash-h h2{margin:0}
+.ui-dash-h a{font-weight:600}
+@media (max-width:600px){.ui-stats{grid-template-columns:1fr 1fr}.ui-stats>div:last-child:nth-child(odd){grid-column:1/-1}.ui-stats b{font-size:1.375rem}.ui-stats>div{padding:12px 14px}.lede,.lead{font-size:1.0625rem}h1,.ui-hero{font-size:1.75rem}
+  .ui-cta .ui-btn{flex:1 1 100%;justify-content:center}.disclaimer{font-size:.8125rem;padding:8px 12px}}
+
+/* 表(デジタル庁: 数字は右よせ・見出しは太字・スマホは表の中だけ動かす / Carbon: 行の高さをそろえる) */
+.table-wrap,.tbl{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 1.5rem;overflow:auto}
+table{font-size:.9375rem;line-height:1.5;font-variant-numeric:tabular-nums;border-collapse:collapse;width:100%}
+th,td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{background:var(--s2);color:var(--ink);font-weight:700;font-size:.875rem;border-bottom:2px solid var(--border);white-space:nowrap}
+tbody tr:nth-child(even) td{background:transparent}
+tbody tr:hover td{background:var(--hover)}
+td:first-child a{font-weight:600}
+td.ui-num,th.ui-num{text-align:right;white-space:nowrap}
+td.ui-date{white-space:nowrap}
+button[data-sort]{font:inherit;font-size:.875rem;min-height:44px;padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer}
+button[data-sort][aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+/* 見出しの行がない表 = 項目と値(GOV.UK の summary list の型) */
+main table:not(:has(thead)){border-top:1px solid var(--line);margin:1rem 0 2rem;font-size:1rem;max-width:52rem}
+main table:not(:has(thead)) th{background:transparent;width:32%;font-weight:700;color:var(--ink);padding:14px 16px 14px 0;white-space:normal}
+main table:not(:has(thead)) td{padding:14px 0}
+main table:not(:has(thead)) tr:hover td{background:transparent}
+/* スマホ: 3列以上の表は1件ずつの箱に積む(USWDS の stacked table。ui.js が data-label をつける) */
+@media (max-width:640px){
+  table.ui-stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  table.ui-stack,table.ui-stack tbody,table.ui-stack tr,table.ui-stack td{display:block;width:auto}
+  table.ui-stack tr{padding:12px 14px;border-bottom:1px solid var(--line)}
+  table.ui-stack td{border:0;padding:2px 0;min-width:0;position:static;background:transparent!important;display:grid;grid-template-columns:7.5em 1fr;gap:8px;font-size:.9375rem}
+  table.ui-stack td::before{content:attr(data-label);color:var(--sub);font-size:.8125rem;font-weight:600;padding-top:2px}
+  table.ui-stack td:first-child{display:block;font-size:1rem;margin-bottom:4px}
+  table.ui-stack td:first-child::before{content:none}
+  table.ui-stack caption{display:block;width:auto;text-align:left}
+  table.ui-stack td.ui-num{text-align:left}
+  .table-wrap:has(table.ui-stack),.tbl:has(table.ui-stack){max-height:none;overflow:visible}
+}
+/* 期限の札(色だけにせず「あと3日」と文字で) */
+.ui-due{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:4px;font-size:.8125rem;font-weight:700;line-height:1.5;white-space:nowrap;border:1px solid transparent;vertical-align:1px}
+.ui-due-now{background:var(--due-bg);color:var(--due-tx)}
+.ui-due-soon{background:var(--danger-bg);color:var(--danger-tx);border-color:var(--danger-bd)}
+.ui-due-week{background:var(--warn-bg);color:var(--warn-tx);border-color:var(--warn-bd)}
+
+/* 記事の一覧 */
+.list .when,.list .d{font-size:.875rem;color:var(--sub)}
+.ui-cards{gap:16px}
+.ui-cards>li{border-radius:8px;padding:16px!important;border-color:var(--line)!important;background:var(--card)}
+.ui-cards h2,.ui-cards h3{font-size:1.1875rem;line-height:1.4;margin:2px 0 6px}
+.ui-cards h2 a,.ui-cards h3 a,.ui-cards>li>a{color:var(--ink);text-decoration:none}
+.ui-cards>li:hover h2 a,.ui-cards>li:hover h3 a{color:var(--accent);text-decoration:underline}
+.ui-cards p{font-size:.9375rem;line-height:1.65;color:var(--sub)}
+
+/* 目次・要点・注意書き */
+.toc{background:var(--card);border:1px solid var(--line);border-radius:8px}
+.toc-h{text-transform:none;letter-spacing:0;font-size:.9375rem;color:var(--ink)}
+.ui-sum{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;background:var(--card)}
+.note{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;padding:1rem 0 0;font-size:.875rem;color:var(--sub)}
+.pr-note,.ai-note{font-size:.875rem}
+
+/* コード(Stripe・Linear の文書の型: 暗い面・言語のラベル・コピーのボタン) */
+code{font-family:var(--font-mono);font-size:.875em;background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:.05em .35em}
+pre{position:relative;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);border-radius:8px;padding:16px 18px;font-size:.875rem;line-height:1.65;overflow-x:auto;margin:1.25rem 0 1.75rem;letter-spacing:0;tab-size:2}
+pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+pre[data-lang]{padding-top:44px}
+pre[data-lang]::before{position:absolute;left:0;right:0;top:0;padding:8px 18px;margin:0;border-bottom:1px solid rgba(127,127,127,.25);font:600 .75rem/1.4 var(--font-mono);color:var(--code-sub);text-transform:none;letter-spacing:0}
+.ui-copy{position:absolute;top:5px;right:6px;min-height:30px!important;font:600 .75rem/1 var(--font-body);color:var(--code-sub);background:transparent;border:1px solid rgba(127,127,127,.35);border-radius:5px;padding:6px 10px;cursor:pointer}
+.ui-copy:hover{color:var(--code-ink);border-color:var(--code-sub)}
+pre:not([data-lang]) .ui-copy{top:8px}
+
+/* フッター */
+body>footer,.site-foot{max-width:none;margin:4rem 0 0;padding:0;background:var(--s2);border-top:1px solid var(--line);color:var(--sub);font-size:.875rem;line-height:1.8}
+body>footer:not(.site-foot){padding:28px max(var(--gutter,16px),calc((100% - var(--page))/2 + 24px)) 40px}
+.site-foot .wrap{max-width:var(--page);padding-top:28px;padding-bottom:40px}
+body>footer a,.site-foot a{color:var(--sub)}
+.sisters{margin-top:.75rem}
+@media print{body>header,body>footer{background:none;color:#000}}
+
+caption.ui-cap{caption-side:top;text-align:left;font-size:.875rem;line-height:1.5;color:var(--sub);padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
+main table:not(:has(thead)) caption.ui-cap{padding:0 0 10px;border:0;background:transparent}
+.table-wrap table:not(:has(thead)),.tbl table:not(:has(thead)){border-top:0;margin:0;max-width:none}
+.table-wrap table:not(:has(thead)) :is(th,caption.ui-cap),.tbl table:not(:has(thead)) :is(th,caption.ui-cap){padding-left:16px}
+.table-wrap table:not(:has(thead)) td,.tbl table:not(:has(thead)) td{padding-right:16px}
+caption.ui-cap-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}
+time{font-variant-numeric:tabular-nums}
+
+body>header,body>header.site-head{background:var(--head-bg);border-bottom:1px solid var(--line)}
+.brand::before{content:none;display:none}
+.brand{font-size:1.1875rem}
+body>header .tag{display:none}
+.ui-due-now,.ui-due-soon{background:var(--warn-bg);color:var(--warn-tx);border-color:var(--warn-bd)}
+.ui-due-week{background:transparent;color:var(--sub);border-color:var(--line)}
+.ui-find{border:1px solid var(--line);border-radius:8px;background:var(--s2);padding:20px 24px;margin:1.25rem 0 2rem}
+.ui-find>h2{font-size:1.125rem;margin:0 0 12px;line-height:1.4}
+.ui-jump{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:0}
+.ui-jump label{flex-basis:100%;font-weight:600;font-size:.875rem;color:var(--sub);margin:0}
+.ui-jump select{font:inherit;font-size:1rem;min-height:48px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--ink);flex:1 1 260px;max-width:420px;min-width:0;text-overflow:ellipsis}
+.ui-jump .ui-btn{min-height:48px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
+.ui-find .ui-group{margin:18px 0 0}
+.ui-find .ui-group-h{font-size:.875rem;color:var(--sub)}
+html[lang=ja] .brand{letter-spacing:.02em}
+@media (max-width:600px){.ui-find .ui-same{display:none}.ui-find{padding:16px}.ui-jump select{max-width:100%;width:100%;min-width:0;flex-basis:100%;box-sizing:border-box}.ui-jump .ui-btn{flex:1 1 100%;justify-content:center}}
+.ui-lede{font-size:1.125rem;line-height:1.75;color:var(--sub);max-width:var(--measure);margin:-.25rem 0 1.75rem}
+html[lang=en] .ui-lede{line-height:1.6}
+.ui-topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;list-style:none;padding:0;margin:0 0 1rem}
+.ui-topics li{margin:0}
+.ui-topics a{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:64px;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);text-decoration:none}
+.ui-topics a b{font-size:1rem;font-weight:700;line-height:1.35}
+.ui-topics a span{font-size:.8125rem;color:var(--sub)}
+.ui-topics a:hover{border-color:var(--accent)}.ui-topics a:hover b{color:var(--accent)}
+
+.ui-lang{display:flex;align-items:center;gap:2px;font-size:.875rem;margin-left:4px;flex:none}
+.ui-lang a{color:var(--head-sub);text-decoration:none;padding:10px 10px;border-radius:6px;min-height:44px;display:inline-flex;align-items:center}
+.ui-lang a:hover{color:var(--head-ink);background:rgba(127,127,127,.14)}
+.ui-lang span[aria-current]{color:var(--head-ink);font-weight:650;padding:10px 6px}
+@media (max-width:700px){body>header .ui-lang{margin-left:auto}body>header .ui-lang~.ui-menu-btn{margin-left:4px}.ui-lang span[aria-current]{display:none}.ui-lang a{padding:10px 8px}}
+.ui-l-short{display:none}
+@media (max-width:480px){.ui-l-long{display:none}.ui-l-short{display:inline}}
+@media print{.ui-lang{display:none}}
+
+/* 記事のサイト: 読む列は狭く、トップだけ広く(カードを並べる) */
+.wrap{max-width:var(--page)}
+main.wrap,body>main{max-width:calc(var(--col) + 48px)}
+main.wrap:has(>.intro),body>main:has(.ui-hero){max-width:var(--page)}
+main:has(>.intro) .ui-cards,main:has(.ui-hero) .ui-cards{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+main:has(>.intro) .ui-cards>li,main:has(.ui-hero) .ui-cards>li{grid-template-columns:1fr}
+main:has(>.intro) .ui-cards>li>*,main:has(.ui-hero) .ui-cards>li>*{grid-column:1}
+main:has(>.intro) .ui-cards .ui-thumb-a,main:has(.ui-hero) .ui-cards .ui-thumb-a{grid-row:auto;grid-column:1;margin-bottom:8px}
+main:has(>.intro) .intro>:is(p,h1),main:has(.ui-hero)>:is(p,h1){max-width:var(--measure)}
+body>header,body>header.site-head{background:var(--bg)}
+article p,article li{max-width:var(--col)}
+.ui-side{left:calc(50% + 24px + var(--col) / 2)}
+
+/* 先頭の記事を大きく(トップだけ・広い画面) */
+@media (min-width:860px){
+main:has(.ui-hero) .ui-cards>li:first-child,main:has(>.intro) .ui-cards>li:first-child{grid-column:1/-1;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:6px 32px;padding:20px!important;align-items:center}
+main:has(.ui-hero) .ui-cards>li:first-child>*,main:has(>.intro) .ui-cards>li:first-child>*{grid-column:2}
+main:has(.ui-hero) .ui-cards>li:first-child .ui-thumb-a,main:has(>.intro) .ui-cards>li:first-child .ui-thumb-a{grid-column:1;grid-row:1 / span 6;margin:0}
+main:has(.ui-hero) .ui-cards>li:first-child>a:not(.ui-thumb-a),main:has(.ui-hero) .ui-cards>li:first-child h3,main:has(>.intro) .ui-cards>li:first-child h3{font-size:1.5rem;line-height:1.4}
+main:has(.ui-hero) .ui-cards>li:first-child p:not(.d):not(.when),main:has(>.intro) .ui-cards>li:first-child p:not(.d):not(.when){font-size:1rem}
+}
+.ui-cards>li>a:not(.ui-thumb-a){font-weight:700;font-size:1.125rem;line-height:1.45;display:block;margin:2px 0 6px;color:var(--ink);text-decoration:none}
+.ui-cards>li:hover>a:not(.ui-thumb-a){color:var(--accent);text-decoration:underline}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき", "image": ["https://gazou.aobaworks.com/og/image-ai-same-character-fix.png"], "description": "画像生成ai 同じキャラを出したい人向けに、MidjourneyのEditモデルと旧cref、Stable DiffusionのSeedとLoRA、Geminiの画像参照の使い分けを手順と比較表でまとめました(2026年10月時点)。", "datePublished": "2026-10-22", "dateModified": "2026-10-22", "mainEntityOfPage": "https://gazou.aobaworks.com/image-ai-same-character-fix/", "url": "https://gazou.aobaworks.com/image-ai-same-character-fix/", "inLanguage": "ja", "keywords": "画像生成AI, キャラクター固定, Midjourney, Stable Diffusion, LoRA, Gemini, Nano Banana, プロンプト", "isPartOf": {"@type": "WebSite", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/"}, "author": {"@type": "Organization", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/about/", "parentOrganization": {"@type": "Organization", "name": "Aoba Works", "url": "https://aobaworks.com/"}}, "publisher": {"@type": "Organization", "name": "画像生成AI比較", "url": "https://gazou.aobaworks.com/", "parentOrganization": {"@type": "Organization", "name": "Aoba Works", "url": "https://aobaworks.com/"}, "publishingPrinciples": "https://gazou.aobaworks.com/about/", "logo": "https://gazou.aobaworks.com/og/_site-e12cfe71.png", "contactPoint": {"@type": "ContactPoint", "contactType": "editorial", "email": "shigoto.ai.note@gmail.com"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://gazou.aobaworks.com/"}, {"@type": "ListItem", "position": 2, "name": "画像生成AI", "item": "https://gazou.aobaworks.com/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/"}, {"@type": "ListItem", "position": 3, "name": "画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき", "item": "https://gazou.aobaworks.com/image-ai-same-character-fix/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "画像生成AIで作った同じキャラを商用利用できますか?", "acceptedAnswer": {"@type": "Answer", "text": "サービスとプランによります。Stable DiffusionのCommunity Licenseは年商100万ドル以下なら商用も無料です(Stability AI License)。Midjourneyの商用の条件はMidjourney商用利用プランの記事と公式サイトで確認してください。規約のどこを読めばいいかは商用利用、規約のどこを確認するかにまとめています。"}}, {"@type": "Question", "name": "Midjourneyで --cref が効かないのはなぜですか?", "acceptedAnswer": {"@type": "Answer", "text": "--cref は以前のバージョン向けに作られた機能で、2026年10月時点のV8.2では、参照画像を使った生成をEditモデルが受け持っているからです(Midjourney Updates)。V8.2ではEditモデルで参照画像を渡してください。旧バージョンで --cref を使う場合の対応範囲は、公式ドキュメントで確認してください。"}}, {"@type": "Question", "name": "無料だけで同じキャラを作り続けられますか?", "acceptedAnswer": {"@type": "Answer", "text": "できます。Geminiの無料プランでもNano Banana 2で画像の生成と編集ができ、画像の参照も使えます。ただし1日の上限があります。Stable DiffusionもGPU付きのPCがあれば無料で使えます。"}}, {"@type": "Question", "name": "LoRAは自分で作らないといけませんか?", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。配布されているLoRAを使うこともできます。ただしオリジナルキャラを固定したいなら、自分で学習させるしかありません。配布品を使うときは、それぞれの利用条件(商用の可否など)を確かめてください。"}}, {"@type": "Question", "name": "ChatGPTで作ったキャラをMidjourneyやGeminiで使えますか?", "acceptedAnswer": {"@type": "Answer", "text": "自分で作った画像なら、参照画像としてアップロードできます。ただし、生成した元のサービスの規約にも従う必要があります。サービスをまたいで使う前に、両方の規約を確認しておきましょう。"}}]}</script>
+</head><body><header><a class="brand" href="/">画像生成AI比較</a><nav class="gnav" aria-label="メニュー"><a href="/">記事一覧</a><a href="/tag/">テーマ</a><a href="/about/">このサイトについて</a></nav><p class="tag">画像生成AIの比較と使い方(無料枠、商用利用の規約、プロンプトの書き方)を公式情報で解説</p></header>
+<main><nav class="crumbs" aria-label="パンくずリスト"><a href="/">ホーム</a><span>›</span><a href="/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/">画像生成AI</a><span>›</span>画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき</nav><article><h1>画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき</h1><p class="meta">運営 <a href="/about/">Aoba Works</a> · 公開 <time datetime="2026-10-22">2026年10月22日</time> · 25分で読めます</p><p class="meta made-note">この記事の作り方: AI が各サービスの公式の情報(下の「出典」)を読んで書き、出典の無い料金・規約の文や作り話を落とす自動の点検に通してから公開しています。公式で確かめた日: <time datetime="2026-10-22">2026-10-22</time>(<a href="/sources/">確かめた公式ページの一覧</a>)</p><p class="tags"><a href="/tag/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/">#画像生成AI</a> <a href="/tag/midjourney/">#Midjourney</a> <a href="/tag/stable-diffusion/">#Stable Diffusion</a> <a href="/tag/gemini/">#Gemini</a></p><p>画像生成AIで同じキャラを出し続けるには、プロンプトの工夫だけに頼らず、各サービスの「固定する機能」を使います。2026年10月時点では、Midjourneyなら<strong>Editモデル(参照画像を渡して生成する機能)</strong>、Stable DiffusionならSeedの固定とLoRA、Geminiならキャラの画像をアップロードして参照させる方法が公式の手段です。どれを選ぶかは、予算・パソコンの性能・何枚作るかで決まります。</p>
+<aside class="ui-sum" aria-label="要点"><p class="ui-sum-h">この記事の要点</p><ul><li>MidjourneyはV8.2ではcrefではなくEditモデルを使う</li><li>Seedは構図の再現、LoRAは顔や特徴の固定と役割が違う</li><li>Geminiは画像を毎回渡す参照型で、無料から使える</li></ul><p class="ui-sum-who"><b>向いている人: </b>同じキャラでSNS投稿やブログの挿絵を続けて作りたい人</p></aside><nav class="toc" aria-label="目次"><p class="toc-h">目次</p><ol><li><a href="#あなたに合うのはどれ">あなたに合うのはどれ?</a></li><li><a href="#画像生成aiで同じキャラを保てないのはなぜ">画像生成AIで同じキャラを保てないのはなぜ?</a></li><li><a href="#midjourneyでキャラクターを固定する方法-cref">Midjourneyでキャラクターを固定する方法(--cref)</a></li><li><a href="#stable-diffusionでseedとloraを使った同一キャラ生成の手順">Stable DiffusionでSeedとLoRAを使った同一キャラ生成の手順</a></li><li><a href="#geminiの画像生成で同じキャラを使う方法">Geminiの画像生成で同じキャラを使う方法</a></li><li><a href="#midjourney-stable-diffusion-geminiのキャラ固定">Midjourney・Stable Diffusion・Geminiのキャラ固定機能の違いは?</a></li><li><a href="#同じキャラを保つプロンプトの書き方のコツ">同じキャラを保つプロンプトの書き方のコツ</a></li><li><a href="#キャラ固定がうまくいかないときのつまずきと対処法">キャラ固定がうまくいかないときのつまずきと対処法</a></li><li><a href="#次にやること">次にやること</a></li><li><a href="#よくある質問">よくある質問</a></li><li><a href="#出典">出典</a></li></ol></nav><h2 id="あなたに合うのはどれ">あなたに合うのはどれ?</h2>
+<p>まずは無料で試せるGeminiから始め、絵柄の作り込みが必要ならMidjourney、細部まで固定したいならStable Diffusion+LoRAへ進む、という順番が迷いにくいです。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">あなたに合うのはどれ?</caption><thead><tr><th>状況</th><th>まず選ぶもの</th><th>最初に開くページ</th></tr></thead><tbody><tr><td>初心者で、まず無料で試したい</td><td>Gemini(Nano Banana 2)</td><td><a href="https://gemini.google.com/" rel="noopener">gemini.google.com</a></td></tr><tr><td>SNSやブログ用に、きれいな絵柄で毎週数枚</td><td>Midjourney V8.2 のEditモデル</td><td><a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates:Edit Model for V8</a></td></tr><tr><td>漫画・連載・グッズ素材など、同じキャラを何十枚も</td><td>Stable Diffusion+LoRA</td><td><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features" rel="noopener">AUTOMATIC1111 Features(LoRAの項)</a></td></tr><tr><td>仕事の資料で、人物の見た目をそろえたい</td><td>Gemini の画像参照(必要なら有料プランでPro)</td><td><a href="https://support.google.com/gemini/answer/14286560?hl=ja" rel="noopener">Gemini アプリで画像を生成、編集する</a></td></tr><tr><td>Midjourneyの古い記事を見て --cref を使いたい</td><td>V8.2 のEditモデルで参照画像を渡す</td><td><a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates:Edit Model for V8</a></td></tr></tbody></table></div>
+<p>選んだ理由を1行ずつ書いておきます。</p>
+<ul><li>Gemini:無料プランでも「Nano Banana 2による画像生成」が使えます(<a href="https://support.google.com/gemini/answer/16275805?hl=ja" rel="noopener">Gemini アプリ ヘルプ</a>)。</li><li>Midjourney:Editモデルは参照画像を最大4枚まで同時に渡せます(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates</a>)。料金とプランは、契約前に公式サイトで確認してください。</li><li>Stable Diffusion+LoRA:キャラを学習させたファイルを自分で持てるので、サービスの仕様が変わっても同じ結果を出しやすい方法です。そのぶん準備に手間がかかります。</li></ul>
+<h2 id="画像生成aiで同じキャラを保てないのはなぜ">画像生成AIで同じキャラを保てないのはなぜ?</h2>
+<p>画像生成AIは、毎回ちがうノイズから絵を組み立て直しているからです。同じプロンプトを入れても、出発点のノイズが変われば顔や服の細部がずれます。</p>
+<p>Stable Diffusionのような拡散モデルは、ランダムなノイズから少しずつ絵を浮かび上がらせる仕組みです。そのノイズを決める番号がSeed(シード)です。Seedがランダムなままだと、同じプロンプトでも毎回ちがう絵になります。</p>
+<p>もう1つの理由は、言葉だけでは顔を特定できないことです。たとえば「黒髪ショートの女の子、青いパーカー」と書いても、この条件に当てはまる顔は無数にあります。AIはその中から毎回ちがう1人を選ぶので、目の形や前髪の分け方がずれていきます。</p>
+<p>よくあるつまずきは次の2つです。</p>
+<ul><li>1枚目が気に入ったので、同じプロンプトで「笑顔」だけ足したら別人になった。言葉が1つ増えるだけで、構図や顔の解釈が全体的に変わることがあります。</li><li>服の色はそろったのに、顔が別人。服や髪色は言葉で指定しやすい一方、顔立ちは言葉にしにくい部分です。</li></ul>
+<p>そこで各サービスは「参照画像を渡す」「Seedを固定する」「キャラを学習させる」といった機能を用意しています。ここから先は、その機能をサービスごとに見ていきます。</p>
+<h2 id="midjourneyでキャラクターを固定する方法-cref">Midjourneyでキャラクターを固定する方法(--cref)</h2>
+<p>2026年10月時点のMidjourneyでは、V8.2で同じキャラを作るなら、参照画像を渡すEditモデルを使います。「--cref」で検索して出てくる解説の多くは以前のバージョン向けのものなので、まず自分のバージョンを確かめてください。</p>
+<h3 id="v8ではeditモデルが参照画像の役割を受け持つ">V8ではEditモデルが参照画像の役割を受け持つ</h3>
+<p>Editモデルの発表では、参照画像を使った生成が Omni Reference(--oref)の置き換えだとはっきり書かれています。</p>
+<blockquote><p>「generating images with other images (replacing omni-reference)」(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates:Edit Model for V8</a>)</p></blockquote>
+<p>訳:ほかの画像を使って画像を生成する機能で、Omni Referenceの代わりになるもの。</p>
+<p>Editモデルは<time datetime="2026-08-27">2026年8月27日</time>に発表され、参照画像は最大4枚まで渡せます(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates</a>)。V8.2で同じキャラを作るなら、古い記事の --cref や --oref の書き方をまねるより、Editモデルを使うほうが確実です。</p>
+<h3 id="v8-2のeditモデルで同じキャラを出す手順">V8.2のEditモデルで同じキャラを出す手順</h3>
+<p>Editモデルを開く方法は、発表記事に4つ載っています(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates</a>・2026-10-22に数えた)。プロンプト欄に画像を付ける、拡大表示(lightbox)右下の「edit」ボタン、左のサイドバーの「edit」タブ、Discordの <code>--edit</code> の4つです。Webで始めるなら、次の流れがわかりやすいでしょう。</p>
+<ol><li>midjourney.com を開き、基準にしたいキャラの画像を1枚用意します。Midjourneyで作った画像でも、自分で描いた絵をアップロードしてもかまいません。</li><li>左のサイドバーの「edit」タブを開き、その画像をアップロードします。生成済みの画像なら、拡大表示の右下にある「edit」を押します。</li><li>指示文を英語で書きます。たとえば <code>the same girl sitting at a cafe table, smiling, holding a coffee cup</code> のように、変えたい部分(場所・ポーズ・表情)だけを書きます。</li><li>顔の角度や服の見え方を補いたいときは、参照画像を足します(合計4枚まで)。たとえば「正面の顔」「全身」「横顔」の3枚です。</li><li>生成された候補から近いものを選び、ずれた部分だけをブラシで囲んで直します(インペイント)。</li></ol>
+<p>つまずきやすいのは、Style Reference(--sref)やムードボードとの組み合わせです。発表記事には、このバージョンではムードボードやsrefに追加のプロンプト指示が必要になる場合がある、と書かれています。絵柄が参照画像に引っぱられすぎるときは、指示文に画風の言葉(たとえば <code>flat anime illustration</code>)を足してください。</p>
+<h3 id="旧バージョンの-cref-oref-を使う場合">旧バージョンの --cref・--oref を使う場合</h3>
+<p>旧バージョンのほうが好みの絵柄で、--cref や --oref を使いたい人もいるでしょう。これらは対応するバージョンや強さの数値の範囲が決まっている機能で、Niji(アニメ系モデル)の世代によっても扱いが異なります。使う前に、Midjourney公式ドキュメントの各機能のページで、対応バージョンと設定値を確かめてください。</p>
+<h3 id="midjourneyの料金と向き-不向き">Midjourneyの料金と向き・不向き</h3>
+<p>料金とプランの内容は変わることがあるので、契約前に公式サイトのプラン案内で確認してください(2026年10月時点)。商用で使うときの条件は<a href="/midjourney-commercial-plan/">Midjourney商用利用プラン</a>の記事にまとめています。</p>
+<ul><li>向いている人:絵柄の完成度を重視し、月に数十〜数百枚をWebブラウザだけで作りたい人</li><li>向いていない人:有料プランを契約する前に手軽に試したい人(まずはGeminiが手軽です)、ほくろや服のロゴまで毎回ぴったりそろえたい人</li><li>注意点:参照画像の方法は「似せる」もので、細かい模様やアクセサリーはずれることがあります。仕様の変わり方も速く、半年前の解説が通用しないことがあります</li></ul>
+<h2 id="stable-diffusionでseedとloraを使った同一キャラ生成の手順">Stable DiffusionでSeedとLoRAを使った同一キャラ生成の手順</h2>
+<p>Stable Diffusionでは、Seedの固定で「同じ絵の微修正」を、LoRAで「別の場面でも同じ顔」を実現します。役割がちがうので、両方を使い分けます。</p>
+<h3 id="seedとloraの役割の違い">SeedとLoRAの役割の違い</h3>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">SeedとLoRAの役割の違い</caption><thead><tr><th></th><th>Seedの固定</th><th>LoRA</th></tr></thead><tbody><tr><td>固定されるもの</td><td>出発点のノイズ(構図・雰囲気)</td><td>キャラの顔・髪型・服などの特徴</td></tr><tr><td>向いている場面</td><td>気に入った1枚の表情や色だけ変える</td><td>場所やポーズが変わっても同じキャラを出す</td></tr><tr><td>準備</td><td>数字を控えるだけ</td><td>配布されたファイルを入れる、または自分で学習させる</td></tr><tr><td>弱点</td><td>プロンプトを大きく変えると効かない</td><td>学習に画像と時間とGPUが必要</td></tr><tr><td>費用</td><td>無料</td><td>自分のPCなら電気代のみ。クラウドGPUを借りると有料</td></tr></tbody></table></div>
+<p>LoRAについて、Hugging Faceの公式ドキュメントは「学習するパラメーターの数を大きく減らす、軽い学習方法」と説明しています。</p>
+<blockquote><p>「LoRA … is a popular and lightweight training technique that significantly reduces the number of trainable parameters.」(<a href="https://huggingface.co/docs/diffusers/training/lora" rel="noopener">Hugging Face Diffusers:LoRA</a>)</p></blockquote>
+<p>訳:LoRAは、学習させるパラメーターの数を大きく減らせる、軽くて広く使われている学習方法です。</p>
+<p>同じページには、できあがる重みのファイルは数百MBほどで、保存や共有がしやすいとも書かれています。</p>
+<h3 id="seedを固定する手順-automatic1111">Seedを固定する手順(AUTOMATIC1111)</h3>
+<p>AUTOMATIC1111(Stable Diffusion web UI)の場合です。</p>
+<ol><li>いつもどおりプロンプトを入れて「Generate」を押し、気に入った1枚を選びます。</li><li>その画像の下に出る生成情報から「Seed:」の数字を探します。</li><li>Seed欄にその数字を入れます(初期値の -1 はランダムの意味です)。</li><li>プロンプトの一部、たとえば <code>smile</code> を <code>surprised</code> に変えて、もう一度「Generate」を押します。</li><li>少しだけ変化をつけたいときは、Seed欄の横の「Extra」にチェックを入れ、Variation seed と Variation strength を使います。</li></ol>
+<p>Extraの中身(Variation seed や Seed resize)は、公式Wikiの機能一覧で説明されています(<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features" rel="noopener">AUTOMATIC1111 Features</a>)。</p>
+<p>Seedだけでは限界があります。「カフェの席」から「海辺で走る」のように構図が大きく変わると、同じSeedでも顔は別人になりやすいです。場面を変えるならLoRAが必要です。</p>
+<h3 id="loraを読み込む手順">LoRAを読み込む手順</h3>
+<ol><li>LoRAファイル(<code>.safetensors</code> または <code>.pt</code>)を <code>models/Lora</code> フォルダーに入れます。</li><li>web UIを再起動するか、LoRAの一覧を更新します。</li><li>プロンプトに <code>&lt;lora:ファイル名:0.8&gt;</code> の形で書き足します。ファイル名には拡張子を付けません。末尾の数字はLoRAの効き具合で、ふつうは0〜1の範囲です。</li><li>LoRAの配布ページに「トリガーワード」が書かれていれば、それもプロンプトに入れます。</li><li>「Generate」を押します。</li></ol>
+<p>ここまでの書き方とフォルダーの場所は、公式Wikiに書かれているとおりです(<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features" rel="noopener">AUTOMATIC1111 Features</a>)。同じページには、LoRAはネガティブプロンプトに入れられないという注意もあります。</p>
+<p>たとえば次のように書きます。</p>
+<pre><code>&lt;lora:mychara_v1:0.8&gt;, mychara, 1girl, short black hair, blue hoodie, sitting at a cafe table, smiling</code></pre>
+<h3 id="自分でloraを作るときの目安">自分でLoRAを作るときの目安</h3>
+<p>自分のオリジナルキャラを固定したい場合は、LoRAを自分で学習させます。Hugging Faceのdiffusersには学習用のスクリプトがあり、公式ドキュメントには例のデータセットでの学習は、VRAM 11GBのGPU(2080 Ti)で約5時間かかると書かれています(<a href="https://huggingface.co/docs/diffusers/training/lora" rel="noopener">Hugging Face Diffusers:LoRA</a>)。これはドキュメントの例の条件なので、自分のキャラの少ない枚数で学習する場合とは時間が変わります。</p>
+<p>GPUのVRAMが足りるかどうかは、この作業ができるかを分ける境目です。手持ちのPCで足りるか迷うなら、<a href="/gazou-seisei-ai-local-pc-gpu/">画像生成AIローカルのGPU比較</a>でVRAMと予算の目安を確認してください。</p>
+<h3 id="stable-diffusionのライセンスと向き-不向き">Stable Diffusionのライセンスと向き・不向き</h3>
+<p>Stability AIのモデルはCommunity Licenseで、年商100万ドル以下なら商用でも無料で使えます。</p>
+<blockquote><p>「Use of the Core Models is free for everyone, unless you're using the Core Models for a commercial purpose and you or your organization generate over USD $1M」(<a href="https://stability.ai/license" rel="noopener">Stability AI License</a>)</p></blockquote>
+<p>訳:商用目的で使い、本人または組織の年商が100万ドルを超える場合を除き、Core Modelsは誰でも無料で使えます。</p>
+<ul><li>向いている人:同じキャラを数十枚以上作る人、細部までそろえたい人、GPU付きのPCを持っている人</li><li>向いていない人:PCの設定やファイルの管理が苦手な人、今日中に1枚ほしい人</li><li>注意点:配布されているLoRAには、それぞれ別の利用条件があります。既存の作品のキャラを学習したLoRAは、権利の面でトラブルになりやすいので、商用には使わないでください</li></ul>
+<h2 id="geminiの画像生成で同じキャラを使う方法">Geminiの画像生成で同じキャラを使う方法</h2>
+<p>Geminiでは、キャラの画像をチャットにアップロードし、「この人物のまま○○して」と頼みます。学習も設定もいらず、会話のたびに画像を見せる「都度参照」の方法です。</p>
+<p>Googleの公式ヘルプは、Nano Banana 2の特長としてキャラクターの一貫性を挙げています。</p>
+<blockquote><p>「さまざまな生成画像で人物やキャラクターの外見を維持できます」(<a href="https://support.google.com/gemini/answer/14286560?hl=ja" rel="noopener">Gemini アプリ ヘルプ</a>)</p></blockquote>
+<h3 id="手順-パソコン">手順(パソコン)</h3>
+<ol><li><a href="https://gemini.google.com/" rel="noopener">gemini.google.com</a> を開き、Googleアカウントでログインします。</li><li>入力欄の「+」からキャラの画像をアップロードします。Geminiで作った画像なら、サイドバーの「ライブラリ」から選び、画像の下の「チャット」を押しても続けられます。</li><li>指示を書きます。たとえば「この画像の女の子と同じ顔・髪型・服装のまま、カフェで本を読んでいる場面にしてください。背景以外は変えないでください」。</li><li>送信ボタンを押します。</li><li>細部が気になるときは、同じチャットで「前髪を元の画像と同じ分け目に戻して」のように1か所ずつ直します。</li><li>有料プランなら、画像の右下のその他アイコンから「Pro でやり直す」を選び、Nano Banana Proで作り直せます。</li></ol>
+<p>手順2〜6の画面の言葉は、公式ヘルプに書かれているとおりです(<a href="https://support.google.com/gemini/answer/14286560?hl=ja" rel="noopener">Gemini アプリで画像を生成、編集する</a>)。ヘルプには、別のNano Bananaモデルを使いたいときは生成を頼む前にGeminiのモデルを切り替える、とも書かれています。</p>
+<h3 id="プランと使えるモデル">プランと使えるモデル</h3>
+<p>Geminiの公式のプランページに載っている個人向けのプランは、無料・Google AI Plus・Google AI Pro・Google AI Ultra の4つです(<a href="https://gemini.google/jp/subscriptions/" rel="noopener">Google AI プラン</a>・2026-10-22に数えた)。月額はPlusが725円、Proが2,900円です(2026年10月時点・最新は公式で確認)。</p>
+<p>使用量の上限ページでは、Nano Banana 2での画像生成は全プランで使え、「Nano Banana Proで画像の再度生成」はPlus以上で使えると表になっています(<a href="https://support.google.com/gemini/answer/16275805?hl=ja" rel="noopener">Gemini アプリの上限</a>)。上限の枚数は、変わることがあるのでこのページで確認してください。</p>
+<h3 id="geminiでつまずきやすい所">Geminiでつまずきやすい所</h3>
+<ul><li>会話が長くなると、だんだん顔がずれていきます。Googleの公式noteは、新しい会話を始め、キャラの外見や残したい特徴を改めて説明するか、画像を入れ直すと一貫性を保ちやすいと勧めています(<a href="https://note.com/google_gemini/n/nbe404b055d37" rel="noopener">Gemini 公式note:Nano Banana プロンプトのコツ</a>)。</li><li>編集機能には年齢の条件があります。画像の編集は18歳以上などの条件がヘルプに書かれています。</li><li>学校や職場のアカウントでは、管理者の設定で使える機能が限られることがあります。</li></ul>
+<ul><li>向いている人:無料で今日から試したい人、資料やSNSの挿絵を数枚ずつ作る人</li><li>向いていない人:何十枚もの連作で、細部まで完全にそろえたい人</li><li>注意点:キャラの情報はファイルとして残らないので、元の画像は必ず自分で保存しておきます。無料プランでは1日の上限に達すると、その日はそれ以上作れません</li></ul>
+<h2 id="midjourney-stable-diffusion-geminiのキャラ固定">Midjourney・Stable Diffusion・Geminiのキャラ固定機能の違いは?</h2>
+<p>手軽さならGemini、絵柄と手軽さの両立ならMidjourneyのEditモデル、再現の安定性ならStable Diffusion+LoRAです。何枚作るか、どこまでそろえたいかで選びます。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">Midjourney・Stable Diffusion・Geminiのキャラ固定機能の違いは?</caption><thead><tr><th></th><th>Midjourney(V8.2 Edit)</th><th>Stable Diffusion(Seed+LoRA)</th><th>Gemini(画像参照)</th></tr></thead><tbody><tr><td>固定の方法</td><td>参照画像(最大4枚)+指示文</td><td>ノイズの固定+学習ファイル</td><td>会話ごとに画像をアップロード</td></tr><tr><td>準備の手間</td><td>小さい</td><td>大きい(LoRA学習)</td><td>ほぼ無し</td></tr><tr><td>細部の再現</td><td>顔・服は似る。小物はずれることも</td><td>LoRAの出来しだいで最も安定</td><td>似るが、会話が長いとずれやすい</td></tr><tr><td>費用の入口</td><td>有料プラン(料金は公式で確認)</td><td>無料(GPU付きPCが必要)</td><td>無料〜</td></tr><tr><td>必要なもの</td><td>ブラウザ</td><td>GPU付きPCまたはクラウドGPU</td><td>ブラウザかスマホアプリ</td></tr><tr><td>仕様の変わりやすさ</td><td>大きい(参照機能がEditモデルへ移行)</td><td>自分のファイルは変わらない</td><td>モデルの更新あり</td></tr></tbody></table></div>
+<p>料金は2026年10月時点(<a href="https://gemini.google/jp/subscriptions/" rel="noopener">Google AI プラン</a>・<a href="https://stability.ai/license" rel="noopener">Stability AI License</a>)。Midjourneyを含め、最新は公式で確認してください。</p>
+<p>用途ごとに見るとこうなります。</p>
+<p><strong>SNSのアイコンや、週に数枚の投稿。</strong> 無料のGeminiで十分なことが多いです。絵柄にこだわりたくなったらMidjourneyへ。</p>
+<p><strong>ブログの挿絵を毎回同じキャラで。</strong> 毎月10枚以上ならMidjourneyのEditモデル。参照画像を3〜4枚(正面・全身・横顔など)そろえておくと、記事ごとのずれが小さくなります。</p>
+<p><strong>漫画、LINEスタンプの候補、連載もの。</strong> 何十枚も同じキャラが出るなら、Stable Diffusion+LoRAに時間をかける意味があります。最初の学習は手間ですが、そのあとの1枚あたりの作業は軽くなります。</p>
+<p><strong>仕事の資料。</strong> 人物の雰囲気をそろえる程度なら、Geminiの画像参照で足ります。社外に出す資料では、<a href="/ai-image-commercial-use-terms-check/">商用利用の規約の確認ポイント</a>も先に見ておきましょう。</p>
+<h2 id="同じキャラを保つプロンプトの書き方のコツ">同じキャラを保つプロンプトの書き方のコツ</h2>
+<p>キャラの特徴を「固定の一文」にして、毎回同じ単語・同じ順番で先頭に置きます。変える部分(場所・ポーズ・表情)は、その後ろに書き分けます。</p>
+<p>公式機能が顔を受け持ち、プロンプトが服や小物を受け持つ、と考えるとわかりやすいでしょう。参照画像だけでは、服の柄やアクセサリーがずれることがあります。そこを言葉で毎回同じように指定します。</p>
+<h3 id="キャラ設定の一文を作る手順">キャラ設定の一文を作る手順</h3>
+<ol><li>基準の画像を見ながら、特徴を書き出します。髪(色・長さ・前髪)、目の色、服(色・形・柄)、小物、体型の順です。</li><li>1つの特徴を1つの言葉に決めます。「青いパーカー」と決めたら、ほかの回で「ブルーのフーディー」とは書きません。</li><li>それを1行にまとめ、メモ帳に保存します。</li><li>生成のたびにその行を貼り、後ろに場面を足します。</li></ol>
+<p>たとえば、こんな形です。</p>
+<pre><code>[固定] a young woman, short black bob hair with straight bangs, brown eyes, blue zip-up hoodie, white t-shirt, silver star earrings
+[変える] sitting at a cafe table by the window, reading a book, soft morning light</code></pre>
+<p>Geminiなら日本語のままで大丈夫です。たとえば「黒髪のボブで前髪はまっすぐ、茶色の目、青いジップパーカーに白Tシャツ、銀の星のピアス。この見た目は変えずに、窓ぎわのカフェで本を読んでいる場面にしてください」。</p>
+<p>語順の決め方は<a href="/image-ai-prompt-kakikata-jun/">プロンプトの書き方、順番で決まる</a>、髪型の言葉選びは<a href="/image-ai-prompt-hairstyle/">髪型を指定する書き方</a>にまとめています。髪型は顔の次に印象を左右するので、言い方を1つに決めておきましょう。</p>
+<h3 id="プロンプトでやりがちな失敗">プロンプトでやりがちな失敗</h3>
+<ul><li>特徴を盛りすぎる。10個も20個も並べると、AIがどれを優先するか迷います。見分けに必要な4〜6個に絞ります。</li><li>場面の言葉が固定の特徴とぶつかる。「水着でビーチ」と書けば、パーカーの指定とぶつかります。服を変えたい回は、固定の行から服を外します。</li><li>「同じキャラで」とだけ書く。Geminiのように会話で参照できるサービス以外では、この言葉だけでは前の画像を思い出せません。</li></ul>
+<h2 id="キャラ固定がうまくいかないときのつまずきと対処法">キャラ固定がうまくいかないときのつまずきと対処法</h2>
+<p>崩れる原因は、だいたい「参照画像の質」「参照の効き方」「学習データ」「会話の長さ」のどれかです。症状から原因を探してください。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">キャラ固定がうまくいかないときのつまずきと対処法</caption><thead><tr><th>症状</th><th>よくある原因</th><th>直し方</th></tr></thead><tbody><tr><td>顔がだんだん別人になる(Gemini)</td><td>会話が長く、前の指示が薄まった</td><td>新しいチャットで、基準画像とキャラ設定の一文を入れ直す</td></tr><tr><td>服を変えたいのに元の服のまま</td><td>参照画像の服が強く反映されている</td><td>固定の一文から服を外し、新しい服をプロンプトで指定する</td></tr><tr><td>参照画像の構図やポーズまでまねされる</td><td>参照画像に引っぱられている</td><td>Editでは「ポーズは自由に」と指示文に書く。構図のちがう参照画像を足す</td></tr><tr><td>絵柄が参照画像に引っぱられる(V8.2)</td><td>sref・ムードボードとの組み合わせ</td><td>指示文に画風の言葉を足す</td></tr><tr><td>何をしても顔が似ない</td><td>参照画像が小さい・暗い・顔が横向き</td><td>正面で顔が大きく写った、明るい画像に替える</td></tr><tr><td>LoRAの顔がのっぺりする、画風がくずれる</td><td>LoRAの効きが強すぎる</td><td><code>&lt;lora:名前:0.8&gt;</code> を0.6〜0.7に下げる</td></tr><tr><td>LoRAを入れても効かない</td><td>トリガーワードがない、ファイルの場所がちがう</td><td>配布ページのトリガーワードを入れ、<code>models/Lora</code> にあるか確かめる</td></tr><tr><td>LoRAで同じポーズや背景ばかり出る</td><td>学習画像のポーズ・背景がかたよっている</td><td>角度・服・背景のちがう画像を足して学習し直す</td></tr></tbody></table></div>
+<p>表の中のMidjourneyの挙動は公式の発表(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates</a>)、LoRAの書き方は<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features" rel="noopener">AUTOMATIC1111 Features</a>によります。LoRAの数値(0.6〜0.7)は調整の一例です。LoRAごとに合う値はちがうので、0.1ずつ動かして確かめてください。</p>
+<h3 id="基準画像の作り方で8割が決まる">基準画像の作り方で8割が決まる</h3>
+<p>参照型の方法(MidjourneyのEditもGeminiも)は、最初の1枚の質が結果の上限になります。たとえば次のような画像だと、AIが顔を読み取りやすくなります。</p>
+<ul><li>顔がはっきり見える正面か、ななめ前の向き</li><li>帽子・サングラス・手で顔が隠れていない</li><li>背景が単色に近く、キャラだけが目立つ</li><li>全身の画像も1枚あると、服や体型が伝わる</li></ul>
+<p>最初に「キャラ設定シート」として正面・横・全身の3枚を作っておくと、どのサービスに移っても使い回せます。</p>
+<h3 id="実在の人物や他人のキャラは使わない">実在の人物や他人のキャラは使わない</h3>
+<p>友人の写真や有名人の写真、他人が描いたキャラを参照画像にするのは避けてください。肖像権や著作権の問題になります。自分で作ったキャラか、自分で描いた絵を使いましょう。</p>
+<h2 id="次にやること">次にやること</h2>
+<p>まずは無料で使えるGeminiで基準のキャラを1体作り、同じキャラで場面を変えた画像が出るか確かめるところから始めましょう。</p>
+<h3 id="自分でやる人の-今日の一歩">自分でやる人の、今日の一歩</h3>
+<ol><li>Geminiで基準のキャラを1枚作り、自分のPCに保存します。この画像はほかのサービスでもそのまま参照画像に使えます。</li><li>「キャラ設定の一文」(髪・目・服・小物)をメモ帳に書いて保存します。</li><li>新しいチャットでその画像と一文を入れ、場面だけ変えた画像を2〜3枚作ります。ずれた部分をメモしておくと、次にどのサービスへ進むか決めやすくなります。</li></ol>
+<h3 id="早く確実にしたい人向けの選択肢">早く確実にしたい人向けの選択肢</h3>
+<p>どれも公式のサービスです。料金は2026年10月時点なので、最新は公式で確認してください。</p>
+<div class="tbl"><table><caption class="ui-cap ui-cap-sr">早く確実にしたい人向けの選択肢</caption><thead><tr><th>選択肢</th><th>費用</th><th>向いている人</th><th>向いていない人</th></tr></thead><tbody><tr><td>Google AI Plus / Pro(Gemini)</td><td>月725円 / 月2,900円</td><td>Geminiの無料の上限が足りない人、Nano Banana Proで作り直したい人</td><td>Gemini以外の機能を使わない、月に数枚だけの人</td></tr><tr><td>Midjourney</td><td>有料プラン(料金は公式サイトで確認)</td><td>絵柄の質と手軽さの両方がほしい人</td><td>有料契約の前に手軽に試したい人、日本語だけで操作したい人</td></tr><tr><td>Stable Diffusion(自分のPC)</td><td>ソフトは無料、GPU付きPCが必要</td><td>何十枚も同じキャラを作る人、設定をいじるのが苦にならない人</td><td>PCに詳しくない人、すぐに結果がほしい人</td></tr></tbody></table></div>
+<p>有料プランに入っても、キャラの細部が完全にそろうわけではありません。まず無料の範囲で「何が足りないのか」(枚数か、絵柄か、細部か)をはっきりさせてから選ぶと、むだな出費を防げます。</p>
+<h3 id="このサイトの関係する記事">このサイトの関係する記事</h3>
+<ul><li>無料枠と商用利用の条件をまとめて比べるなら:<a href="/ai-image-commercial-use-free-plan-compar/">画像生成AI商用利用おすすめ、無料枠で比べる</a></li><li>Midjourneyのどのプランで商用利用できるか:<a href="/midjourney-commercial-plan/">Midjourney商用利用プラン</a></li><li>Stable Diffusion用のPCを選ぶなら:<a href="/gazou-seisei-ai-local-pc-gpu/">画像生成AIローカルのGPU比較【2026】</a></li><li>プロンプトの語順を整えるなら:<a href="/image-ai-prompt-kakikata-jun/">画像生成AIプロンプトの書き方、順番で決まる</a></li></ul>
+<h2 id="よくある質問">よくある質問</h2>
+<h3 id="画像生成aiで作った同じキャラを商用利用できますか">画像生成AIで作った同じキャラを商用利用できますか?</h3>
+<p>サービスとプランによります。Stable DiffusionのCommunity Licenseは年商100万ドル以下なら商用も無料です(<a href="https://stability.ai/license" rel="noopener">Stability AI License</a>)。Midjourneyの商用の条件は<a href="/midjourney-commercial-plan/">Midjourney商用利用プラン</a>の記事と公式サイトで確認してください。規約のどこを読めばいいかは<a href="/ai-image-commercial-use-terms-check/">商用利用、規約のどこを確認するか</a>にまとめています。</p>
+<h3 id="midjourneyで-cref-が効かないのはなぜですか">Midjourneyで --cref が効かないのはなぜですか?</h3>
+<p>--cref は以前のバージョン向けに作られた機能で、2026年10月時点のV8.2では、参照画像を使った生成をEditモデルが受け持っているからです(<a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates</a>)。V8.2ではEditモデルで参照画像を渡してください。旧バージョンで --cref を使う場合の対応範囲は、公式ドキュメントで確認してください。</p>
+<h3 id="無料だけで同じキャラを作り続けられますか">無料だけで同じキャラを作り続けられますか?</h3>
+<p>できます。Geminiの無料プランでもNano Banana 2で画像の生成と編集ができ、画像の参照も使えます。ただし1日の上限があります。Stable DiffusionもGPU付きのPCがあれば無料で使えます。</p>
+<h3 id="loraは自分で作らないといけませんか">LoRAは自分で作らないといけませんか?</h3>
+<p>いいえ。配布されているLoRAを使うこともできます。ただしオリジナルキャラを固定したいなら、自分で学習させるしかありません。配布品を使うときは、それぞれの利用条件(商用の可否など)を確かめてください。</p>
+<h3 id="chatgptで作ったキャラをmidjourneyやgeminiで使えますか">ChatGPTで作ったキャラをMidjourneyやGeminiで使えますか?</h3>
+<p>自分で作った画像なら、参照画像としてアップロードできます。ただし、生成した元のサービスの規約にも従う必要があります。サービスをまたいで使う前に、両方の規約を確認しておきましょう。</p>
+<h2 id="出典">出典</h2>
+<ul><li><a href="https://updates.midjourney.com/edit-model-for-v8/" rel="noopener">Midjourney Updates:Edit Model for V8(<time datetime="2026-08-27">2026年8月27日</time>)</a></li><li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features" rel="noopener">AUTOMATIC1111 Stable Diffusion web UI:Features</a></li><li><a href="https://huggingface.co/docs/diffusers/training/lora" rel="noopener">Hugging Face Diffusers:LoRA</a></li><li><a href="https://stability.ai/license" rel="noopener">Stability AI:License</a></li><li><a href="https://support.google.com/gemini/answer/14286560?hl=ja" rel="noopener">Gemini アプリ ヘルプ:Gemini アプリで画像を生成、編集する</a></li><li><a href="https://support.google.com/gemini/answer/16275805?hl=ja" rel="noopener">Gemini アプリ ヘルプ:使用量の上限</a></li><li><a href="https://gemini.google/jp/subscriptions/" rel="noopener">Google AI プラン(日本)</a></li><li><a href="https://note.com/google_gemini/n/nbe404b055d37" rel="noopener">Gemini 公式note:Nano Banana プロンプトのコツ</a></li></ul><aside class="credit" aria-label="この記事の作り方"><p><strong>この記事の作り方</strong>: 各サービスの公式ページ・ヘルプなどの公開情報を、AI の助けを借りて調べてまとめ、出典・誇張・PR 表示の自動の点検を通してから公開しています。体験談や試した結果は書いていません(<a href="/about/">編集方針</a>)。</p><p>公式の情報で確かめた日: <time datetime="2026-10-22">2026年10月22日</time></p></aside><p class="note">内容の誤りや古くなった情報に気づいたら、<a href="mailto:shigoto.ai.note@gmail.com">shigoto.ai.note@gmail.com</a> までお知らせください。記事は順番に公式の情報で確かめ直しています。</p></article><section class="related"><h2>関連記事</h2><ul class="list"><li><p class="d"><time datetime="2026-10-15">2026年10月15日</time> · 24分で読めます</p><h3><a href="/ai-image-commercial-use-terms-check/">画像生成AI商用利用、規約のどこを確認するか</a></h3><p>画像生成AIを商用で使う前に規約で見るべき4つの場所（権利、プラン・売上条件、禁止事項、公開範囲・例外）と探し方を、主要6サービスの公式ページをもとに解説します（2026年10月時点）。</p></li><li><p class="d"><time datetime="2026-10-15">2026年10月15日</time> · 21分で読めます</p><h3><a href="/image-ai-prompt-kakikata-jun/">画像生成AIプロンプトの書き方、順番で決まる</a></h3><p>画像生成AIのプロンプトの書き方を、主語→構図→画風の「順番」でまとめました。ChatGPT・Gemini・Firefly・Midjourneyの公式ガイドをもとに、型、つまずいたときの直し方、料金まで紹介します。</p></li><li><p class="d"><time datetime="2026-10-17">2026年10月17日</time> · 19分で読めます</p><h3><a href="/image-ai-prompt-hairstyle/">画像生成AIプロンプト、髪型を指定する書き方</a></h3><p>画像生成AIのプロンプトで髪型を指定するときの書き方を、髪色・長さ・前髪・結び方の部位ごとの指定語と、色移り・前髪崩れなど崩れやすい箇所の直し方までまとめて解説します。</p></li></ul></section></main><footer><p><strong>画像生成AI比較</strong> — 画像生成AIの比較と使い方(無料枠、商用利用の規約、プロンプトの書き方)を公式情報で解説</p>
+<p><a href="/">記事一覧</a> · <a href="/about/">このサイトについて・編集方針</a> · <a href="/privacy/">プライバシーポリシー</a> · <a href="/feed.xml">RSS</a></p><p>© 2026 画像生成AI比較</p></footer><script src="/ui.js" defer></script></body></html>
