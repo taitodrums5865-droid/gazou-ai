@@ -5,6 +5,7 @@
 記事は各サービスの公式情報を調べてまとめ、出典を示し、定期的に見直しています。
 
 ## 記事
+- [Adobe Firefly商用利用|モデル別の可否を表で確認](https://gazou.aobaworks.com/adobe-firefly-commercial-use/): adobe firefly 商用利用の条件を公式規約から整理。Firefly自社モデルとパートナーモデルの違い、無料・有料プラン、ベータ版、IP補償の対象、学習に使われない条件を表と手順で確認できます。
 - [Nano Bananaの使い方|無料で始める人が最初にやる3つ](https://gazou.aobaworks.com/nano-banana-howto-commercial/): nano banana 使い方を、Gemini公式ヘルプの手順どおりにPC・スマホ別でまとめました。無料プランでできることとできないこと、商用利用で確認する規約の条文、透かしの扱いまで、公式情報をもとに整理しています。
 - [画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき](https://gazou.aobaworks.com/image-ai-same-character-fix/): 画像生成ai 同じキャラを出したい人向けに、MidjourneyのEditモデルと旧cref、Stable DiffusionのSeedとLoRA、Geminiの画像参照の使い分けを手順と比較表でまとめました(2026年10月時点)。
 - [Midjourney商用利用プラン|4プランの年商条件を表で](https://gazou.aobaworks.com/midjourney-commercial-plan/): midjourney 商用利用 プランの答えです。Basic・Standard・Pro・Megaのどの有料プランでも商用利用はできます。年商100万ドルを超える会社はPro以上が必要です。料金・Stealth・著作権を公式情報の表と手順で整理しました。

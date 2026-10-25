@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://gazou.aobaworks.com/</loc><lastmod>2026-10-23</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/</loc><lastmod>2026-10-26</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/about/</loc></url>
 <url><loc>https://gazou.aobaworks.com/privacy/</loc></url>
-<url><loc>https://gazou.aobaworks.com/tag/</loc><lastmod>2026-10-23</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/adobe-firefly-commercial-use/</loc><lastmod>2026-10-26</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/nano-banana-howto-commercial/</loc><lastmod>2026-10-23</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/image-ai-same-character-fix/</loc><lastmod>2026-10-22</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/midjourney-commercial-plan/</loc><lastmod>2026-10-21</lastmod></url>
@@ -12,10 +13,11 @@
 <url><loc>https://gazou.aobaworks.com/ai-image-commercial-use-free-plan-compar/</loc><lastmod>2026-10-16</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/ai-image-commercial-use-terms-check/</loc><lastmod>2026-10-15</lastmod></url>
 <url><loc>https://gazou.aobaworks.com/image-ai-prompt-kakikata-jun/</loc><lastmod>2026-10-15</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/tag/adobe-firefly/</loc><lastmod>2026-10-23</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/tag/gemini/</loc><lastmod>2026-10-23</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/tag/midjourney/</loc><lastmod>2026-10-23</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/tag/stable-diffusion/</loc><lastmod>2026-10-23</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/tag/%E5%95%86%E7%94%A8%E5%88%A9%E7%94%A8/</loc><lastmod>2026-10-23</lastmod></url>
-<url><loc>https://gazou.aobaworks.com/sources/</loc><lastmod>2026-10-23</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/adobe-firefly/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/gemini/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/midjourney/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/stable-diffusion/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/%E5%95%86%E7%94%A8%E5%88%A9%E7%94%A8/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/tag/%E8%91%97%E4%BD%9C%E6%A8%A9/</loc><lastmod>2026-10-26</lastmod></url>
+<url><loc>https://gazou.aobaworks.com/sources/</loc><lastmod>2026-10-26</lastmod></url>
 </urlset>
