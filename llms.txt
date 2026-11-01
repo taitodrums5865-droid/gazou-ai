@@ -1,17 +1,16 @@
-# 画像生成AI比較
+# 画像生成AI料金比較
 
-> 画像生成AIの比較と使い方(無料枠、商用利用の規約、プロンプトの書き方)を公式情報で解説
+> 画像生成AIの料金比較(月額・年払い・無料枠の回数・商用利用の条件)を公式の料金ページで確かめて円でまとめるサイト
 
 記事は各サービスの公式情報を調べてまとめ、出典を示し、定期的に見直しています。
 
 ## 記事
+- [画像生成AI無料おすすめ|無料枠の回数を一覧比較](https://gazou.aobaworks.com/gazou-seisei-ai-muryo-osusume/): 画像生成AIを無料で使いたい人向けに、Gemini・Adobe Firefly・Canva・Ideogram・ChatGPT・Microsoft Copilot・Stable Diffusionの無料枠を、公式に書いてある回数・リセットの時間・画像が公開になるかで比べました。用途別のおすすめと、無料で足りなくなったときの有料プランの金額もまとめています(2026年11月1日時点)。
+- [画像生成AIの料金比較|主要サービスの月額を円で一覧](https://gazou.aobaworks.com/gazou-seisei-ai-ryokin-hikaku/): 画像生成AIの料金を、Gemini・Adobe Firefly・Canva・Microsoft 365・Midjourney・Ideogram・ConoHa AI Canvasの公式の料金ページで確かめて一覧にしました(ChatGPTは公式ページを読み込めず料金は未確認)。円で払えるかドル払いか、月払いと年払いの差、何枚作れるかの書き方の違い、商用利用でプランが変わる条件まで表で比べます(2026年11月1日時点)。
 - [Gemini画像生成の無料制限|5時間リセットと上限時の対処表](https://gazou.aobaworks.com/gemini-image-free-limit/): Gemini画像生成の無料制限を公式ヘルプだけで整理しました。1日の枚数が公表されていない理由、5時間ごとのリセットと週の上限、上限に達したときの動き、有料プランとの違いを表と手順で説明します。
 - [Adobe Firefly商用利用|モデル別の可否を表で確認](https://gazou.aobaworks.com/adobe-firefly-commercial-use/): adobe firefly 商用利用の条件を公式規約から整理。Firefly自社モデルとパートナーモデルの違い、無料・有料プラン、ベータ版、IP補償の対象、学習に使われない条件を表と手順で確認できます。
 - [Nano Bananaの使い方|無料で始める人が最初にやる3つ](https://gazou.aobaworks.com/nano-banana-howto-commercial/): nano banana 使い方を、Gemini公式ヘルプの手順どおりにPC・スマホ別でまとめました。無料プランでできることとできないこと、商用利用で確認する規約の条文、透かしの扱いまで、公式情報をもとに整理しています。
-- [画像生成AIで同じキャラを保つ方法|公式機能の使い分け表つき](https://gazou.aobaworks.com/image-ai-same-character-fix/): 画像生成ai 同じキャラを出したい人向けに、MidjourneyのEditモデルと旧cref、Stable DiffusionのSeedとLoRA、Geminiの画像参照の使い分けを手順と比較表でまとめました(2026年10月時点)。
 - [Midjourney商用利用プラン|4プランの年商条件を表で](https://gazou.aobaworks.com/midjourney-commercial-plan/): midjourney 商用利用 プランの答えです。Basic・Standard・Pro・Megaのどの有料プランでも商用利用はできます。年商100万ドルを超える会社はPro以上が必要です。料金・Stealth・著作権を公式情報の表と手順で整理しました。
 - [画像生成AIローカルのGPU比較【2026】VRAMと予算で選ぶ](https://gazou.aobaworks.com/gazou-seisei-ai-local-pc-gpu/): 画像生成AIをローカルで動かすには、まずGPUのVRAM容量を確認します。8GB・12GB・16GB・24GB以上で動くモデルの違い、2026年10月時点のGPU価格の目安、ComfyUI Desktopの導入手順を公式ドキュメントをもとにまとめました。
-- [画像生成AIプロンプト 髪型の書き方|部位別の指定語一覧](https://gazou.aobaworks.com/image-ai-prompt-hairstyle/): 画像生成AIのプロンプトで髪型を指定するときの書き方を、髪色・長さ・前髪・結び方の部位ごとの指定語と、色移り・前髪崩れなど崩れやすい箇所の直し方までまとめて解説します。
 - [画像生成AI 商用利用おすすめ【2026年】無料枠で比較](https://gazou.aobaworks.com/ai-image-commercial-use-free-plan-compar/): 画像生成ai 商用利用 おすすめを、無料枠だけで商用利用できるかで比較しました。Adobe Firefly・Canva・Ideogram・ChatGPTの無料枠と注意点、状況別の選び方、使い始める手順をまとめています。
 - [画像生成AI 商用利用の規約|主要6サービスの確認箇所](https://gazou.aobaworks.com/ai-image-commercial-use-terms-check/): 画像生成AIを商用で使う前に規約で見るべき4つの場所（権利、プラン・売上条件、禁止事項、公開範囲・例外）と探し方を、主要6サービスの公式ページをもとに解説します（2026年10月時点）。
-- [画像生成AIプロンプトの書き方|主語→構図→画風の順の型](https://gazou.aobaworks.com/image-ai-prompt-kakikata-jun/): 画像生成AIのプロンプトの書き方を、主語→構図→画風の「順番」でまとめました。ChatGPT・Gemini・Firefly・Midjourneyの公式ガイドをもとに、型、つまずいたときの直し方、料金まで紹介します。
