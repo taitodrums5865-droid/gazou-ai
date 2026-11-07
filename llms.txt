@@ -5,6 +5,7 @@
 記事は各サービスの公式情報を調べてまとめ、出典を示し、定期的に見直しています。
 
 ## 記事
+- [ChatGPT 画像生成 制限|無料〜Proの上限と月額を表で](https://gazou.aobaworks.com/chatgpt-image-limit-plans/): ChatGPT 画像生成 制限を無料・Go・Plus・Proで比較。公式が枚数を公表しない点、上限の確認とリセット、円の月額、どのプランから足りるかの判断基準まで表で整理します。
 - [画像生成AI 比較表【2026年】月額・無料枠・商用条件で選ぶ](https://gazou.aobaworks.com/image-ai-comparison-table/): ChatGPT・Gemini・Midjourneyなど9サービスの月額、無料枠、商用利用の条件を公式ページで確認した比較表です。向いていない人も整理しました。2026年11月時点の情報です。
 - [画像生成AI無料おすすめ|無料枠の回数を一覧比較](https://gazou.aobaworks.com/gazou-seisei-ai-muryo-osusume/): 画像生成AIを無料で使いたい人向けに、Gemini・Adobe Firefly・Canva・Ideogram・ChatGPT・Microsoft Copilot・Stable Diffusionの無料枠を、公式に書いてある回数・リセットの時間・画像が公開になるかで比べました。用途別のおすすめと、無料で足りなくなったときの有料プランの金額もまとめています(2026年11月1日時点)。
 - [画像生成AIの料金比較|主要サービスの月額を円で一覧](https://gazou.aobaworks.com/gazou-seisei-ai-ryokin-hikaku/): 画像生成AIの料金を、Gemini・Adobe Firefly・Canva・Microsoft 365・Midjourney・Ideogram・ConoHa AI Canvasの公式の料金ページで確かめて一覧にしました(ChatGPTは公式ページを読み込めず料金は未確認)。円で払えるかドル払いか、月払いと年払いの差、何枚作れるかの書き方の違い、商用利用でプランが変わる条件まで表で比べます(2026年11月1日時点)。
