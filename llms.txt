@@ -5,6 +5,7 @@
 記事は各サービスの公式情報を調べてまとめ、出典を示し、定期的に見直しています。
 
 ## 記事
+- [gemini 画像生成 商用利用|無料と有料の条件をプラン別表で](https://gazou.aobaworks.com/gemini-image-commercial-use/): gemini 画像生成 商用利用の可否を、無料・Google AI Plus/Pro/Ultra・Workspaceのプラン別にGoogle公式の規約で整理。2026年8月に追加された透かしの設定と禁止事項もまとめました。
 - [midjourney 料金 日本円|税・手数料込み4プラン換算表](https://gazou.aobaworks.com/midjourney-price-yen/): midjourney 料金を日本円で知りたい人向け。公式のドル価格を1ドル158円で換算し、消費税とカードの海外事務手数料を足した月あたりの実質負担を4プランの月払い・年払いで表にしました。為替で変わる幅も載せています。
 - [ChatGPT 画像生成 制限|無料〜Proの上限と月額を表で](https://gazou.aobaworks.com/chatgpt-image-limit-plans/): ChatGPT 画像生成 制限を無料・Go・Plus・Proで比較。公式が枚数を公表しない点、上限の確認とリセット、円の月額、どのプランから足りるかの判断基準まで表で整理します。
 - [画像生成AI 比較表【2026年】月額・無料枠・商用条件で選ぶ](https://gazou.aobaworks.com/image-ai-comparison-table/): ChatGPT・Gemini・Midjourneyなど9サービスの月額、無料枠、商用利用の条件を公式ページで確認した比較表です。向いていない人も整理しました。2026年11月時点の情報です。
